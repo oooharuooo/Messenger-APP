@@ -1,18 +1,18 @@
-const options = {
-	method: "GET",
-	url: "https://billboard-api2.p.rapidapi.com/hot-100",
-	params: { date: "2019-05-11", range: "1-10" },
-	headers: {
-		"x-rapidapi-key": "d507abadacmsh62ff5533fd6d0f5p10475bjsn69568d627955",
-		"x-rapidapi-host": "billboard-api2.p.rapidapi.com",
-	},
+// Setup Firebase database
+const firebaseConfig = {
+	apiKey: "AIzaSyDceC_32Jv-63KrXsH4Fxc4NTp_uauwPW8",
+	authDomain: "messenger-app-e2961.firebaseapp.com",
+	projectId: "messenger-app-e2961",
+	storageBucket: "messenger-app-e2961.appspot.com",
+	messagingSenderId: "424845842346",
+	appId: "1:424845842346:web:547d8cd6468ab150e0bdd3",
+	measurementId: "G-45C1MGDJ5B",
 };
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
 
-axios
-	.request(options)
-	.then(function (response) {
-		console.log(response.data);
-	})
-	.catch(function (error) {
-		console.error(error);
-	});
+const db = firebase.database();
+const msgRef = db.ref("/msgs");
+//to store data in the msgs folder by creating a reference in database
+console.log(db);
