@@ -7,13 +7,19 @@
 		<title>Music Player APP</title>
 	</head>
 	<body>
+		<main>
+			<ul class="msgContainer"></ul>
+			<form class="form">
+				<input type="text" id="msg" name="msg" placeholder="type your message" />
+				<button type="submit" class="msgBtn">Send</button>
+			</form>
+		</main>
 
-		<!-- The core Firebase JS SDK is always required and must be listed first -->
+		<!-- Firebase script -->
 		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
-
 		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
-		
+		<!-- Main script -->
 		<script src="./app.js"></script>
 	</body>
 </html>

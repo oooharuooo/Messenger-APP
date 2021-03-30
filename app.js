@@ -13,6 +13,29 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 const db = firebase.database();
-const msgRef = db.ref("/msgs");
 //to store data in the msgs folder by creating a reference in database
-console.log(db);
+const msgRef = db.ref("/msgs");
+
+
+// Main Script
+const msgBtn = document.querySelector(".msgBtn");
+const submitForm = document.querySelector(".form");
+const msgContainer = document.querySelector(".msgContainer");
+
+submitForm.addEventListener("submit", (e) => {
+	e.preventDefault();
+
+	const msgText = document.querySelector("input[type=text]");
+	// Push msg text to database
+	msgRef.push(msgText.value);
+	// Erase text message
+	msgText.value = "";
+});
+
+// Append and display values from database to the UI
+const updateMsgs = (data) => {
+	console.log(data.node_.value_)
+	msgContainer.innerHTML += `<li>${data.val()}</li>`; //add the <li> message to the chat window
+};
+
+msgRef.on("child_added", updateMsgs);
