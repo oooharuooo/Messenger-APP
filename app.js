@@ -1,4 +1,6 @@
-// Setup Firebase database
+/* ********** */
+// Setup Firebase database //
+/* ********** */
 const firebaseConfig = {
 	apiKey: "AIzaSyDceC_32Jv-63KrXsH4Fxc4NTp_uauwPW8",
 	authDomain: "messenger-app-e2961.firebaseapp.com",
@@ -16,8 +18,10 @@ const db = firebase.database();
 //to store data in the msgs folder by creating a reference in database
 const msgRef = db.ref("/msgs");
 
+/* ********** */
+// Main Script //
+/* ********** */
 
-// Main Script
 const msgBtn = document.querySelector(".msgBtn");
 const submitForm = document.querySelector(".form");
 const msgContainer = document.querySelector(".msgContainer");
@@ -26,16 +30,17 @@ submitForm.addEventListener("submit", (e) => {
 	e.preventDefault();
 
 	const msgText = document.querySelector("input[type=text]");
-	// Push msg text to database
-	msgRef.push(msgText.value);
+	// Push msg text to database and insure message is not empty
+	msgText.value !== "" ? msgRef.push(msgText.value) : null;
 	// Erase text message
 	msgText.value = "";
 });
 
 // Append and display values from database to the UI
 const updateMsgs = (data) => {
-	console.log(data.node_.value_)
-	msgContainer.innerHTML += `<li>${data.val()}</li>`; //add the <li> message to the chat window
+	const { value, text } = data.val();
+	console.log(value, text);
+	msgContainer.innerHTML += `<li class="singleMSG"><p>${data.val()}</p></li>`; //add the <li> message to the chat window
 };
 
 msgRef.on("child_added", updateMsgs);
