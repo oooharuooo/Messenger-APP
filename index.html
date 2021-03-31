@@ -13,36 +13,42 @@
 	</head>
 	<body>
 		<main>
-			<div class="welcomePage">
-				<h1>Welcome to INSTANT MSG</h1>
-				<form class="formInfo">
+			<section class="welcomePage">
+				<h1>Welcome to <span>INSTANT MSG</span></h1>
+				<form class="userSubmitForm">
 					<input
 						type="text"
 						id="username"
 						class="userSubmitBtn userInput"
 						name="username"
+						required
+						minlength="1"
+						maxlength="20"
 						placeholder="Enter your name"
 					/>
 					<button type="submit" class="userSubmitBtn">Submit</button>
 				</form>
-			</div>
-			<div class="titleMSG">
-				<h1>INSTANT MSG</h1>
-			</div>
-			<div class="displayContainer">
-				<ul class="msgContainer"></ul>
-				<form class="form">
-					<input
-						type="text"
-						id="msg"
-						name="msg"
-						placeholder="Type your message"
-					/>
-					<button type="submit" class="msgBtn">
-						<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
-					</button>
-				</form>
-			</div>
+			</section>
+
+			<section class="msgPage displayNone">
+				<div class="titleMSG">
+					<h1>INSTANT MSG</h1>
+				</div>
+				<div class="displayContainer">
+					<ul class="msgContainer"></ul>
+					<form class="form">
+						<input
+							type="text"
+							id="msg"
+							name="msg"
+							placeholder="Type your message"
+						/>
+						<button type="submit" class="msgBtn">
+							<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+						</button>
+					</form>
+				</div>
+			</section>
 		</main>
 
 		<!-- Firebase script -->
@@ -50,6 +56,7 @@
 		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
 
+		<script src="./javascript/firebase.js"></script>
 		<!-- Main script -->
 		<script src="./app.js"></script>
 	</body>

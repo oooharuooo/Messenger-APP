@@ -6,5 +6,10 @@ body {
 	h1 {
 		font-family: "Amatic SC", cursive;
 		font-size: 2.5rem;
+		text-align: center;
+		span {
+			color: $red;
+			font-size: 5rem;
+		}
 	}
 }

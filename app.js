@@ -1,46 +1,75 @@
 /* ********** */
-// Setup Firebase database //
-/* ********** */
-const firebaseConfig = {
-	apiKey: "AIzaSyDceC_32Jv-63KrXsH4Fxc4NTp_uauwPW8",
-	authDomain: "messenger-app-e2961.firebaseapp.com",
-	projectId: "messenger-app-e2961",
-	storageBucket: "messenger-app-e2961.appspot.com",
-	messagingSenderId: "424845842346",
-	appId: "1:424845842346:web:547d8cd6468ab150e0bdd3",
-	measurementId: "G-45C1MGDJ5B",
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
-
-const db = firebase.database();
-//to store data in the msgs folder by creating a reference in database
-const msgRef = db.ref("/msgs");
-
-/* ********** */
 // Main Script //
 /* ********** */
 
 const msgBtn = document.querySelector(".msgBtn");
 const submitForm = document.querySelector(".form");
+const userSubmitForm = document.querySelector(".userSubmitForm");
+const usernameInput = document.querySelector(".userInput");
 const msgContainer = document.querySelector(".msgContainer");
+const msgPage = document.querySelector(".msgPage");
+const welcomePage = document.querySelector(".welcomePage");
 
+// Username submit form
+
+/* userSubmitForm.addEventListener("submit", (e) => {
+	e.preventDefault();
+	console.log("fdfd");
+	userRef.on("child_added", (data) => {
+			userRef.push(usernameInput.value);
+		// 	msgPage.classList.remove("displayNone");
+		// 	welcomePage.remove();
+		// if (usernameInput.value === data.val()) {
+		// 	userRef.push(usernameInput.value);
+		// 	msgPage.classList.remove("displayNone");
+		// 	welcomePage.remove();
+		// }
+	});
+	// if (usernameInput.value !== "") {
+	// 	userRef.push(usernameInput.value)
+	// 	msgPage.classList.remove("displayNone");
+	// 	welcomePage.remove();
+	// }
+});
+ */
+
+userSubmitForm.addEventListener("submit", (e) => {
+	e.preventDefault();
+	userRef.push(usernameInput.value);
+	msgPage.classList.remove("displayNone");
+	welcomePage.remove();
+});
+
+
+
+// Msg Submit Form
 submitForm.addEventListener("submit", (e) => {
 	e.preventDefault();
 
 	const msgText = document.querySelector("input[type=text]");
 	// Push msg text to database and insure message is not empty
-	msgText.value !== "" ? msgRef.push(msgText.value) : null;
+	const userInfo = {
+		username: usernameInput.value,
+		msg: msgText.value,
+	};
+	msgRef.push(userInfo);
+
 	// Erase text message
 	msgText.value = "";
 });
 
 // Append and display values from database to the UI
 const updateMsgs = (data) => {
-	const { value, text } = data.val();
-	console.log(value, text);
-	msgContainer.innerHTML += `<li class="singleMSG"><p>${data.val()}</p></li>`; //add the <li> message to the chat window
+	const { username, msg } = data.val();
+	
+	if (usernameInput.value === username) {
+		console.log("matched");
+	}
+	msgContainer.innerHTML += `<li class="singleMSG">
+	<p>
+	${msg}
+	</p>
+	</li>`; //add the <li> message to the chat window
 };
 
 msgRef.on("child_added", updateMsgs);
