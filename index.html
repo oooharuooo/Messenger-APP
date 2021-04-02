@@ -13,23 +13,83 @@
 	</head>
 	<body>
 		<main>
+	<!-- lOG-IN PAGE -->
 			<section class="welcomePage">
 				<h1>Welcome to <span>INSTANT MSG</span></h1>
-				<form class="userSubmitForm">
-					<input
-						type="text"
-						id="username"
-						class="userSubmitBtn userInput"
-						name="username"
-						required
-						minlength="1"
-						maxlength="20"
-						placeholder="Enter your name"
-					/>
-					<button type="submit" class="userSubmitBtn">Submit</button>
-				</form>
+
+				<ul class="filterTab">
+					<li data-filter="logIn" class="activeFilter"><a href="#">Log In</a></li>
+					<li data-filter="register"><a href="#">Register</a></li>
+				</ul>
+
+				<div class="filterForm">
+				<!-- LOGIN FORM -->
+					<section data-category ="logIn">
+						<form  class="userLogInForm">
+							<input
+								type="text"
+								id="logInUsername"
+								class="userSubmitBtn userInput"
+								name="logInUsername"
+								required
+								minlength="1"
+								maxlength="20"
+								placeholder="username"
+							/>
+								<input
+								type="password"
+								id="logInPassword"
+								class="userSubmitBtn userInput"
+								name="logInPassword"
+								required
+								minlength="1"
+								maxlength="20"
+								placeholder="password"
+							/>
+							<button type="submit" class="userSubmitBtn">Submit</button>
+						</form>
+					</section>
+
+					<section data-category="register" class="displayNone" >
+					<!-- REGISTER FORM -->
+						<form class="userRegisterForm">
+							<input
+								type="text"
+								id="registerName"
+								class="userSubmitBtn userInput"
+								name="registerName"
+								required
+								minlength="1"
+								maxlength="10"
+								placeholder="name"
+							/>
+							<input
+								type="text"
+								id="registerUsername"
+								class="userSubmitBtn userInput"
+								name="registerUsername"
+								required
+								minlength="1"
+								maxlength="20"
+								placeholder="username"
+							/>
+							<input
+								type="password"
+								id="registerPassword"
+								class="userSubmitBtn userInput"
+								name="registerPassword"
+								required
+								minlength="1"
+								maxlength="20"
+								placeholder="password"
+							/>
+							<button type="submit" class="userSubmitBtn">Submit</button></div>
+						</form>
+					</section>
+				</div>
 			</section>
 
+<!-- MESSAGE PAGE-->
 			<section class="msgPage displayNone">
 				<div class="titleMSG">
 					<h1>INSTANT MSG</h1>
@@ -41,6 +101,9 @@
 							type="text"
 							id="msg"
 							name="msg"
+							required
+							minlength="1"
+							maxlength="80"
 							placeholder="Type your message"
 						/>
 						<button type="submit" class="msgBtn">
@@ -57,6 +120,8 @@
 		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
 
 		<script src="./javascript/firebase.js"></script>
+		<!-- Filter Tab -->
+		<script src="./javascript/filterTab.js"></script>
 		<!-- Main script -->
 		<script src="./app.js"></script>
 	</body>

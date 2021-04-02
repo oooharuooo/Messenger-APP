@@ -1,0 +1,28 @@
+.filterTab {
+	display: flex;
+	justify-content: space-around;
+
+	font-size: 2rem;
+	font-family: "Amatic SC", cursive;
+
+	a {
+		color: $second;
+	}
+	.activeFilter {
+		background-color: $third;
+	}
+}
+.userLogInForm {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+}
+
+.userRegisterForm {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+}
+a {
+	text-decoration: none;
+}

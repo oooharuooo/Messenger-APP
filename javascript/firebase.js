@@ -17,5 +17,4 @@ firebase.analytics();
 const db = firebase.database();
 //msg Database
 const msgRef = db.ref("/msgs");
-// user information database
-const userRef = db.ref("/users");
+

@@ -42,7 +42,19 @@ body {
 	border-bottom-right-radius: 1rem;
 
 	.msgContainer {
+		display: flex;
+		flex-direction: column;
 		flex-basis: 90%;
+		gap: 1rem;
+
+		overflow-wrap: anywhere;
+
+		.alignmentLeft {
+			align-self: flex-start;
+		}
+		.alignmentRight {
+			align-self: flex-end;
+		}
 	}
 	.singleMSG {
 		background-color: $white;
