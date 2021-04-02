@@ -8,8 +8,19 @@ body {
     font-size: 2.5rem;
     text-align: center; }
     body h1 span {
+      display: block;
       color: #ce3838;
       font-size: 5rem; }
+
+.introMSG {
+  position: relative; }
+  .introMSG p {
+    margin: 0; }
+  .introMSG i {
+    color: #9098a1;
+    position: absolute;
+    bottom: 65%;
+    left: 84%; }
 
 .filterTab {
   display: flex;
@@ -21,14 +32,12 @@ body {
   .filterTab .activeFilter {
     background-color: #d8ddf1; }
 
-.userLogInForm {
+.formFlex {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem; }
-
-.userRegisterForm {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 0.3rem; }
 
 a {
@@ -46,24 +55,25 @@ body {
     flex-direction: column;
     justify-content: center; }
 
-.displayNone {
-  display: none; }
-
 .titleMSG {
   background-color: #d8ddf1;
   text-align: center;
   padding: 2rem;
   border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem; }
+  border-top-right-radius: 1rem;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; }
   .titleMSG h1 {
     color: #644cad; }
 
 .displayContainer {
   display: flex;
-  flex-basis: 80%;
   flex-direction: column;
+  flex-basis: 80%;
   background-color: #f7d3d3;
   padding: 2rem;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem; }
   .displayContainer .msgContainer {
@@ -82,6 +92,9 @@ body {
 ul {
   list-style: none;
   padding-left: 0; }
+
+.displayNone {
+  display: none; }
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 /* Document
@@ -387,6 +400,60 @@ template {
  */
 [hidden] {
   display: none; }
+
+.fadeInEffect {
+  opacity: 1;
+  animation: fadeInOpacity 1 ease-in-out 2.5s; }
+  .fadeInEffect-2 {
+    animation: fadeInOpacity 1 ease-in-out 0.2s; }
+
+.leftToRightEffect {
+  animation: leftToRight 1 ease-in-out 1.5s; }
+
+.shakeEffect {
+  animation: shake infinite 5s; }
+
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px) rotate(0deg); }
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg); }
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg); }
+  30% {
+    transform: translate(3px, 2px) rotate(0deg); }
+  40% {
+    transform: translate(1px, -1px) rotate(1deg); }
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg); }
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg); }
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg); }
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg); }
+  90% {
+    transform: translate(1px, 2px) rotate(0deg); }
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg); } }
+
+@keyframes leftToRight {
+  0% {
+    transform: translateX(-500%);
+    opacity: 0; }
+  75% {
+    transform: translateX(25%); }
+  100% {
+    transform: translateX(0);
+    opacity: 1; } }
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0; }
+  75% {
+    opacity: 0.6; }
+  100% {
+    opacity: 1; } }
 
 .userSubmitBtn {
   color: #644cad;

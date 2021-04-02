@@ -1,3 +1,17 @@
+.introMSG {
+	position: relative;
+	p {
+		margin: 0;
+	}
+	i {
+		color: #9098a1;
+
+		position: absolute;
+		bottom: 65%;
+		left: 84%;
+	}
+}
+
 .filterTab {
 	display: flex;
 	justify-content: space-around;
@@ -12,17 +26,12 @@
 		background-color: $third;
 	}
 }
-.userLogInForm {
-	display: flex;
-	flex-direction: column;
+.formFlex {
+	@include flexColumn;
+	@include flexCenter;
 	gap: 0.3rem;
 }
 
-.userRegisterForm {
-	display: flex;
-	flex-direction: column;
-	gap: 0.3rem;
-}
 a {
 	text-decoration: none;
 }

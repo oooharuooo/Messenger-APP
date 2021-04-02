@@ -2,48 +2,39 @@ body {
 	height: 90vh;
 	padding: 1rem;
 
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	@include flexCenter;
 	main {
 		height: 100%;
-
-		display: flex;
-		flex-direction: column;
+		@include flexColumn;
 		justify-content: center;
 	}
 }
 
-.displayNone {
-	display: none;
-}
+
+
 .titleMSG {
 	background-color: $third;
 
 	text-align: center;
 	padding: 2rem;
-	border-top-left-radius: 1rem;
-	border-top-right-radius: 1rem;
+	@include borderRadius(1rem, 1rem);
 	h1 {
 		color: $second;
 	}
 }
 
 .displayContainer {
-	display: flex;
+	@include flexColumn;
 	flex-basis: 80%;
-	flex-direction: column;
 
 	background-color: $primary;
 
 	padding: 2rem;
 
-	border-bottom-left-radius: 1rem;
-	border-bottom-right-radius: 1rem;
+	@include borderRadius(0, 0, 1rem, 1rem);
 
 	.msgContainer {
-		display: flex;
-		flex-direction: column;
+		@include flexColumn;
 		flex-basis: 90%;
 		gap: 1rem;
 
@@ -64,4 +55,7 @@ body {
 ul {
 	list-style: none;
 	padding-left: 0;
+}
+.displayNone {
+	display: none;
 }

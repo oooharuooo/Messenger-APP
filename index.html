@@ -12,11 +12,16 @@
 		<title>Music Player APP</title>
 	</head>
 	<body>
-		<main>
+		<main class="fadeInEffect">
 	<!-- lOG-IN PAGE -->
 			<section class="welcomePage">
-				<h1>Welcome to <span>INSTANT MSG</span></h1>
-
+				<h1>Welcome to 
+					<span class="leftToRightEffect introMSG">
+						<p>INSTANT MSG</p>
+					<i class="fa fa-bolt shakeEffect" aria-hidden="true"></i>
+					</span>
+			</h1>
+				
 				<ul class="filterTab">
 					<li data-filter="logIn" class="activeFilter"><a href="#">Log In</a></li>
 					<li data-filter="register"><a href="#">Register</a></li>
@@ -25,7 +30,7 @@
 				<div class="filterForm">
 				<!-- LOGIN FORM -->
 					<section data-category ="logIn">
-						<form  class="userLogInForm">
+						<form  class="userLogInForm formFlex fadeInEffect-2">
 							<input
 								type="text"
 								id="logInUsername"
@@ -52,7 +57,7 @@
 
 					<section data-category="register" class="displayNone" >
 					<!-- REGISTER FORM -->
-						<form class="userRegisterForm">
+						<form class="userRegisterForm formFlex fadeInEffect-2">
 							<input
 								type="text"
 								id="registerName"
