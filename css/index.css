@@ -40,6 +40,15 @@ body {
   justify-content: center;
   gap: 0.3rem; }
 
+.emailWarning {
+  background-color: antiquewhite; }
+
+.msgColor {
+  color: #ce3838;
+  text-align: center;
+  font-size: 1.5rem;
+  font-family: "Amatic SC", cursive; }
+
 a {
   text-decoration: none; }
 
@@ -455,21 +464,21 @@ template {
   100% {
     opacity: 1; } }
 
-.userSubmitBtn {
+.submitEffect {
   color: #644cad;
   transition: 0.3s ease all; }
-  .userSubmitBtn:hover {
+  .submitEffect:hover {
     color: #d8ddf1; }
-  .userSubmitBtn:focus {
+  .submitEffect:focus {
     color: #d8ddf1; }
 
-.userInput:hover {
+.inputHoverEffect:hover {
   color: #ce3838; }
 
-.userInput:focus {
+.inputHoverEffect:focus {
   color: #ce3838; }
 
-.userSubmitBtn {
+.submitEffect {
   font-size: 18px;
   letter-spacing: 2px;
   text-align: center;
@@ -480,7 +489,7 @@ template {
   position: relative;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);
   z-index: 2; }
-  .userSubmitBtn:before {
+  .submitEffect:before {
     transition: 0.5s all ease;
     position: absolute;
     top: 0;
@@ -491,12 +500,12 @@ template {
     content: "";
     background-color: #644cad;
     z-index: -1; }
-  .userSubmitBtn:hover:before {
+  .submitEffect:hover:before {
     transition: 0.5s all ease;
     left: 0;
     right: 0;
     opacity: 1; }
-  .userSubmitBtn:focus:before {
+  .submitEffect:focus:before {
     transition: 0.5s all ease;
     left: 0;
     right: 0;

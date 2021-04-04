@@ -1,6 +1,7 @@
 /* ********** */
 // Setup Firebase database //
 /* ********** */
+
 const firebaseConfig = {
 	apiKey: "AIzaSyDceC_32Jv-63KrXsH4Fxc4NTp_uauwPW8",
 	authDomain: "messenger-app-e2961.firebaseapp.com",

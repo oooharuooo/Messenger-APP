@@ -32,6 +32,17 @@
 	gap: 0.3rem;
 }
 
+.emailWarning {
+	background-color: antiquewhite;
+}
+.msgColor {
+	color: $red;
+
+	text-align: center;
+	font-size: 1.5rem;
+	font-family: "Amatic SC", cursive;
+}
+
 a {
 	text-decoration: none;
 }

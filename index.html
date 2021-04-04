@@ -20,7 +20,7 @@
 						<p>INSTANT MSG</p>
 					<i class="fa fa-bolt shakeEffect" aria-hidden="true"></i>
 					</span>
-			</h1>
+				</h1>
 				
 				<ul class="filterTab">
 					<li data-filter="logIn" class="activeFilter"><a href="#">Log In</a></li>
@@ -30,78 +30,73 @@
 				<div class="filterForm">
 				<!-- LOGIN FORM -->
 					<section data-category ="logIn">
+						<p class="errorMsg msgColor fadeInEffect-2 displayNone">Whoops! Incorrect email or password</p>
 						<form  class="userLogInForm formFlex fadeInEffect-2">
 							<input
-								type="text"
-								id="logInUsername"
-								class="userSubmitBtn userInput"
-								name="logInUsername"
+								type="email"
+								id="logInEmail"
+								class="submitEffect inputHoverEffect"
+								name="logInEmail"
 								required
 								minlength="1"
-								maxlength="20"
-								placeholder="username"
+								maxlength="25"
+								placeholder="Email"
 							/>
 								<input
 								type="password"
 								id="logInPassword"
-								class="userSubmitBtn userInput"
+								class="submitEffect inputHoverEffect"
 								name="logInPassword"
 								required
-								minlength="1"
+								minlength="6"
 								maxlength="20"
-								placeholder="password"
+								placeholder="Password"
 							/>
-							<button type="submit" class="userSubmitBtn">Submit</button>
+							<button type="submit" class="submitEffect">Submit</button>
 						</form>
 					</section>
 
 					<section data-category="register" class="displayNone" >
 					<!-- REGISTER FORM -->
+						<p class="msgColor fadeInEffect-2 emailWarning">Do not use your real email</p>
+						<p class="errorMsg msgColor fadeInEffect-2 displayNone">Whoops! This email is already registered</p>
+						<p class="successMsg msgColor fadeInEffect-2 displayNone">Registered! Please login</p>
 						<form class="userRegisterForm formFlex fadeInEffect-2">
+							
 							<input
-								type="text"
-								id="registerName"
-								class="userSubmitBtn userInput"
-								name="registerName"
+								type="email"
+								id="registerEmail"
+								class="submitEffect inputHoverEffect"
+								name="registerEmail"
 								required
 								minlength="1"
-								maxlength="10"
-								placeholder="name"
-							/>
-							<input
-								type="text"
-								id="registerUsername"
-								class="userSubmitBtn userInput"
-								name="registerUsername"
-								required
-								minlength="1"
-								maxlength="20"
-								placeholder="username"
+								maxlength="25"
+								placeholder="Email"
 							/>
 							<input
 								type="password"
 								id="registerPassword"
-								class="userSubmitBtn userInput"
+								class="submitEffect inputHoverEffect"
 								name="registerPassword"
 								required
-								minlength="1"
+								minlength="6"
 								maxlength="20"
-								placeholder="password"
+								placeholder="Password"
 							/>
-							<button type="submit" class="userSubmitBtn">Submit</button></div>
+							<button type="submit" class="submitEffect">Submit</button></div>
 						</form>
 					</section>
 				</div>
 			</section>
 
-<!-- MESSAGE PAGE-->
-			<section class="msgPage displayNone">
+		<!-- MESSAGE PAGE-->
+			<section class="msgPage displayNone fadeInEffect-2">
 				<div class="titleMSG">
 					<h1>INSTANT MSG</h1>
 				</div>
 				<div class="displayContainer">
 					<ul class="msgContainer"></ul>
-					<form class="form">
+					<form class="msgForm">
 						<input
 							type="text"
 							id="msg"
@@ -123,6 +118,8 @@
 		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-auth.js"></script>
+  		<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
 
 		<script src="./javascript/firebase.js"></script>
 		<!-- Filter Tab -->
