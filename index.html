@@ -21,7 +21,9 @@
 					<i class="fa fa-bolt shakeEffect" aria-hidden="true"></i>
 					</span>
 				</h1>
-				
+			</section>
+
+			<section class="formPage">
 				<ul class="filterTab">
 					<li data-filter="logIn" class="activeFilter"><a href="#">Log In</a></li>
 					<li data-filter="register"><a href="#">Register</a></li>
@@ -63,6 +65,7 @@
 						<p class="successMsg msgColor fadeInEffect-2 displayNone">Registered! Please login</p>
 						<form class="userRegisterForm formFlex fadeInEffect-2">
 							
+						
 							<input
 								type="email"
 								id="registerEmail"
@@ -88,12 +91,30 @@
 					</section>
 				</div>
 			</section>
+			
+
+			<section class="registerNamePage">
+				<form class="nameRegisterForm formFlex fadeInEffect-2 displayNone">
+					<input
+						type="text"
+						id="registerName"
+						class="submitEffect inputHoverEffect"
+						name="registerName"
+						required
+						minlength="2"
+						maxlength="15"
+						placeholder="Please type your Name"
+					/>
+					<button type="submit" class="submitEffect">Submit</button>
+				</form>
+			</section>
 
 		<!-- MESSAGE PAGE-->
 			<section class="msgPage displayNone fadeInEffect-2">
 				<div class="titleMSG">
 					<h1>INSTANT MSG</h1>
 				</div>
+	
 				<div class="displayContainer">
 					<ul class="msgContainer"></ul>
 					<form class="msgForm">

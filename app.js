@@ -7,6 +7,8 @@ const msgForm = document.querySelector(".msgForm");
 const msgContainer = document.querySelector(".msgContainer");
 const msgPage = document.querySelector(".msgPage");
 const errorMsg = document.querySelector(".errorMsg");
+const registerName = document.querySelector("#registerName");
+const welcomePage = document.querySelector(".welcomePage");
 
 /* ******************* */
 /* User Register Form */
@@ -23,12 +25,14 @@ registerForm.addEventListener("submit", (e) => {
 	const signUpWithEmailPassword = (e) => {
 		const email = registerEmail.value;
 		const password = registerPassword.value;
+
 		// [START auth_signup_password]
 		firebase
 			.auth()
 			.createUserWithEmailAndPassword(email, password)
 			.then((userCredential) => {
 				// Display msg when user successful registered
+
 				registeredMsg(successMsg);
 			})
 			.catch((error) => {
@@ -37,12 +41,31 @@ registerForm.addEventListener("submit", (e) => {
 			});
 		// [END auth_sign-in_password]
 	};
+
 	signUpWithEmailPassword();
 
 	// Erase value input
 	registerForm.reset();
 });
 
+// const user = firebase.auth().currentUser;
+// user.updateProfile({
+// 	displayName: registerName.value,
+// });
+// console.log(user);
+// firebase.auth().onAuthStateChanged((user) => {
+// 	if (user) {
+// 		// User is signed in, see docs for a list of available properties
+// 		// https://firebase.google.com/docs/reference/js/firebase.User
+// 		var uid = user.uid;
+// 		var displayName = user.displayName;
+// 		console.log(user);
+// 		// ...
+// 	} else {
+// 		// User is signed out
+// 		// ...
+// 	}
+// });
 /* *********** */
 /* Login Form */
 /* ********** */
@@ -51,13 +74,15 @@ const userLogInForm = document.querySelector(".userLogInForm");
 userLogInForm.addEventListener("submit", (e) => {
 	const logInEmail = document.querySelector("#logInEmail");
 	const logInPassword = document.querySelector("#logInPassword");
-	const welcomePage = document.querySelector(".welcomePage");
+
+	const formPage = document.querySelector(".formPage");
+	const nameRegisterForm = document.querySelector(".nameRegisterForm");
 
 	e.preventDefault();
 
 	const signInWithEmailPassword = () => {
-		var email = logInEmail.value;
-		var password = logInPassword.value;
+		const email = logInEmail.value;
+		const password = logInPassword.value;
 		// [START auth_sign-in_password]
 		firebase
 			.auth()
@@ -65,8 +90,27 @@ userLogInForm.addEventListener("submit", (e) => {
 			.then((userCredential) => {
 				// Signed in
 				// Remove Welcome Page and display Msg Page
-				msgPage.classList.remove("displayNone");
-				welcomePage.remove();
+				formPage.remove();
+
+				// display name register form only if there is no displayName in Database
+				const user = firebase.auth().currentUser;
+				if (user.displayName === null) {
+					nameRegisterForm.classList.remove("displayNone");
+					nameRegisterForm.addEventListener("submit", (e) => {
+						e.preventDefault();
+						user.updateProfile({
+							displayName: registerName.value,
+						});
+						// Remove name register form
+						nameRegisterForm.remove();
+						// Display msg page
+						msgPage.classList.remove("displayNone");
+					});
+				} else {
+					msgPage.classList.remove("displayNone");
+				}
+
+				console.log(user, user.displayName);
 			})
 			.catch((error) => {
 				// Display incorrect msg
