@@ -13,7 +13,7 @@
 	</head>
 	<body>
 		<main class="fadeInEffect">
-	<!-- lOG-IN PAGE -->
+			<!-- lOG-IN PAGE -->
 			<section class="welcomePage">
 				<h1>Welcome to 
 					<span class="leftToRightEffect introMSG">
@@ -21,102 +21,112 @@
 					<i class="fa fa-bolt shakeEffect" aria-hidden="true"></i>
 					</span>
 				</h1>
-			</section>
 
-			<section class="formPage">
-				<ul class="filterTab">
-					<li data-filter="logIn" class="activeFilter"><a href="#">Log In</a></li>
-					<li data-filter="register"><a href="#">Register</a></li>
-				</ul>
+				<section class="formPage">
+					<ul class="filterTab">
+						<li data-filter="logIn" class="activeFilter"><a href="#">Log In</a></li>
+						<li data-filter="register"><a href="#">Register</a></li>
+					</ul>
 
-				<div class="filterForm">
-				<!-- LOGIN FORM -->
-					<section data-category ="logIn">
-						<p class="errorMsg msgColor fadeInEffect-2 displayNone">Whoops! Incorrect email or password</p>
-						<form  class="userLogInForm formFlex fadeInEffect-2">
-							<input
-								type="email"
-								id="logInEmail"
-								class="submitEffect inputHoverEffect"
-								name="logInEmail"
-								required
-								minlength="1"
-								maxlength="25"
-								placeholder="Email"
-							/>
+			<div class="filterForm">
+			<!-- LOGIN FORM -->
+			<section data-category ="logIn">
+							<p class="errorMsg msgColor fadeInEffect-2 displayNone">Whoops! Incorrect email or password</p>
+							<form  class="userLogInForm formFlex fadeInEffect-2">
+									<input
+									type="email"
+									id="logInEmail"
+									class="submitEffect inputHoverEffect"
+									name="logInEmail"
+									required
+									minlength="1"
+									maxlength="25"
+									placeholder="Email"
+									/>
+									<input
+									type="password"
+									id="logInPassword"
+									class="submitEffect inputHoverEffect"
+									name="logInPassword"
+									required
+									minlength="6"
+									maxlength="20"
+									placeholder="Password"
+									/>
+									<button type="submit" class="submitEffect">Submit</button>
+							</form>
+						</section>
+
+						<section data-category="register" class="displayNone" >
+			<!-- REGISTER FORM -->
+			<p class="msgColor fadeInEffect-2 emailWarning">Do not use your real email</p>
+							<p class="errorMsg msgColor fadeInEffect-2 displayNone">Whoops! This email is already registered</p>
+							<p class="successMsg msgColor fadeInEffect-2 displayNone">Registered! Please login</p>
+							<form class="userRegisterForm formFlex fadeInEffect-2">
 								<input
-								type="password"
-								id="logInPassword"
+									type="email"
+									id="registerEmail"
+									class="submitEffect inputHoverEffect"
+									name="registerEmail"
+									required
+									minlength="1"
+									maxlength="25"
+									placeholder="Email"
+								/>
+								<input
+									type="password"
+									id="registerPassword"
+									class="submitEffect inputHoverEffect"
+									name="registerPassword"
+									required
+									minlength="6"
+									maxlength="20"
+									placeholder="Password"
+								/>
+								<button type="submit" class="submitEffect">Submit</button></div>
+							</form>
+						</section>
+					<div>
+				</section>
+
+					<section class="registerNamePage">
+						<form class="nameRegisterForm formFlex fadeInEffect-2 displayNone">
+							<input
+								type="text"
+								id="registerName"
 								class="submitEffect inputHoverEffect"
-								name="logInPassword"
+								name="registerName"
 								required
-								minlength="6"
-								maxlength="20"
-								placeholder="Password"
+								minlength="2"
+								maxlength="10"
+								placeholder="Please type your Name"
 							/>
 							<button type="submit" class="submitEffect">Submit</button>
 						</form>
-					</section>
-
-					<section data-category="register" class="displayNone" >
-					<!-- REGISTER FORM -->
-						<p class="msgColor fadeInEffect-2 emailWarning">Do not use your real email</p>
-						<p class="errorMsg msgColor fadeInEffect-2 displayNone">Whoops! This email is already registered</p>
-						<p class="successMsg msgColor fadeInEffect-2 displayNone">Registered! Please login</p>
-						<form class="userRegisterForm formFlex fadeInEffect-2">
-							
-						
-							<input
-								type="email"
-								id="registerEmail"
-								class="submitEffect inputHoverEffect"
-								name="registerEmail"
-								required
-								minlength="1"
-								maxlength="25"
-								placeholder="Email"
-							/>
-							<input
-								type="password"
-								id="registerPassword"
-								class="submitEffect inputHoverEffect"
-								name="registerPassword"
-								required
-								minlength="6"
-								maxlength="20"
-								placeholder="Password"
-							/>
-							<button type="submit" class="submitEffect">Submit</button></div>
-						</form>
-					</section>
-				</div>
-			</section>
-			
-
-			<section class="registerNamePage">
-				<form class="nameRegisterForm formFlex fadeInEffect-2 displayNone">
-					<input
-						type="text"
-						id="registerName"
-						class="submitEffect inputHoverEffect"
-						name="registerName"
-						required
-						minlength="2"
-						maxlength="15"
-						placeholder="Please type your Name"
-					/>
-					<button type="submit" class="submitEffect">Submit</button>
-				</form>
+					</section>	
 			</section>
 
-		<!-- MESSAGE PAGE-->
+			<!-- MESSAGE PAGE-->
 			<section class="msgPage displayNone fadeInEffect-2">
-				<div class="titleMSG">
-					<h1>INSTANT MSG</h1>
+				
+			<!-- <section class="msgPage fadeInEffect-2"> -->
+				<div>
+					<h1>
+						<span class="introMSG">
+							<p>INSTANT MSG</p>
+						</span>
+					</h1>
 				</div>
-	
 				<div class="displayContainer">
-					<ul class="msgContainer"></ul>
+					<ul class="msgContainer">
+						<li class="singleMSG alignmentLeft">
+							<span>Other:</span>
+							<p>other users chatting</p>
+						</li>
+						<li class="singleMSG alignmentRight">
+							<p>this is my message</p>
+						</li>
+					</ul>
 					<form class="msgForm">
 						<input
 							type="text"
@@ -132,6 +142,7 @@
 						</button>
 					</form>
 				</div>
+				<button class="logoutBtn">Log out</button>
 			</section>
 		</main>
 
@@ -140,7 +151,7 @@
 		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-auth.js"></script>
-  		<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
 
 		<script src="./javascript/firebase.js"></script>
 		<!-- Filter Tab -->

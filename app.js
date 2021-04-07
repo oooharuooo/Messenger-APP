@@ -5,9 +5,13 @@
 const msgBtn = document.querySelector(".msgBtn");
 const msgForm = document.querySelector(".msgForm");
 const msgContainer = document.querySelector(".msgContainer");
-const msgPage = document.querySelector(".msgPage");
+
 const errorMsg = document.querySelector(".errorMsg");
+const logInEmail = document.querySelector("#logInEmail");
+const logInPassword = document.querySelector("#logInPassword");
 const registerName = document.querySelector("#registerName");
+
+const msgPage = document.querySelector(".msgPage");
 const welcomePage = document.querySelector(".welcomePage");
 
 /* ******************* */
@@ -48,33 +52,11 @@ registerForm.addEventListener("submit", (e) => {
 	registerForm.reset();
 });
 
-// const user = firebase.auth().currentUser;
-// user.updateProfile({
-// 	displayName: registerName.value,
-// });
-// console.log(user);
-// firebase.auth().onAuthStateChanged((user) => {
-// 	if (user) {
-// 		// User is signed in, see docs for a list of available properties
-// 		// https://firebase.google.com/docs/reference/js/firebase.User
-// 		var uid = user.uid;
-// 		var displayName = user.displayName;
-// 		console.log(user);
-// 		// ...
-// 	} else {
-// 		// User is signed out
-// 		// ...
-// 	}
-// });
-/* *********** */
-/* Login Form */
-/* ********** */
-
+/* ******************* */
+/* User Login Form */
+/* ******************* */
 const userLogInForm = document.querySelector(".userLogInForm");
 userLogInForm.addEventListener("submit", (e) => {
-	const logInEmail = document.querySelector("#logInEmail");
-	const logInPassword = document.querySelector("#logInPassword");
-
 	const formPage = document.querySelector(".formPage");
 	const nameRegisterForm = document.querySelector(".nameRegisterForm");
 
@@ -102,15 +84,17 @@ userLogInForm.addEventListener("submit", (e) => {
 							displayName: registerName.value,
 						});
 						// Remove name register form
-						nameRegisterForm.remove();
+						welcomePage.remove();
+
 						// Display msg page
 						msgPage.classList.remove("displayNone");
+						msgRef.on("child_added", updateMsgs);
 					});
 				} else {
+					welcomePage.remove();
 					msgPage.classList.remove("displayNone");
+					msgRef.on("child_added", updateMsgs);
 				}
-
-				console.log(user, user.displayName);
 			})
 			.catch((error) => {
 				// Display incorrect msg
@@ -136,9 +120,18 @@ const registeredMsg = (msg) => {
 msgForm.addEventListener("submit", (e) => {
 	e.preventDefault();
 
-	const msgText = document.querySelector("input[type=text]");
-	// Push msg text to database and insure message is not empty
-	msgRef.push(msgText.value);
+	const msgText = document.querySelector("#msg");
+	const { displayName, email } = firebase.auth().currentUser;
+	
+	// 
+	const userInfo = {
+		dataName: displayName,
+		dataMsg: msgText.value,
+		dataEmail: email,
+	};
+
+	// Push msg text to database
+	msgRef.push(userInfo);
 
 	// Erase text message
 	msgText.value = "";
@@ -146,13 +139,23 @@ msgForm.addEventListener("submit", (e) => {
 
 // Append and display values from database to the UI
 const updateMsgs = (data) => {
-	const { username, msg } = data.val();
+	const { dataName, dataMsg, dataEmail } = data.val();
+	const { email } = firebase.auth().currentUser;
+
 	msgContainer.innerHTML += `<li class="singleMSG ${
-		logInUsername.value === username ? "alignmentRight" : "alignmentLeft"
+		email === dataEmail ? "alignmentRight" : "alignmentLeft"
 	}">
-	<p>${msg}</p></li>`;
-	if (logInUsername.value === username) {
-		msgContainer.innerHTML += `<button>delete</button>`; //add the <li> message to the chat window
-	}
+					<span>${dataName}</span>
+					<p>${dataMsg}</p></li>`;
+	// if (logInEmail.value === email) {
+	// 	msgContainer.innerHTML += `<button>delete</button>`; //add the <li> message to the chat window
+	// }
+	displayContainer.scrollTop = displayContainer.scrollHeight;
 };
-msgRef.on("child_added", updateMsgs);
+// msgRef.on("child_added", updateMsgs);
+
+// document.getQuerySelector(
+// 	".displayContainer"
+// ).scrollTop = document.getQuerySelector(".displayContainer").scrollHeight;
+
+const displayContainer = document.querySelector(".displayContainer");

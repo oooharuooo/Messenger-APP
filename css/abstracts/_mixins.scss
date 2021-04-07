@@ -11,12 +11,12 @@
 
 @mixin borderRadius(
 	$topLeft: 0,
-	$topRight: 0,
 	$bottomLeft: 0,
+	$topRight: 0,
 	$bottomRight: 0
 ) {
 	border-top-left-radius: $topLeft;
-	border-top-right-radius: $topRight;
 	border-bottom-left-radius: $bottomLeft;
+	border-top-right-radius: $topRight;
 	border-bottom-right-radius: $bottomRight;
 }

@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@100;400;500;700;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap");
 body {
   font-family: "Barlow", sans-serif;
   background-color: #fff6f6; }
@@ -11,6 +12,8 @@ body {
       display: block;
       color: #ce3838;
       font-size: 5rem; }
+  body .displayContainer {
+    font-family: "Kiwi Maru", serif; }
 
 .introMSG {
   position: relative; }
@@ -64,39 +67,54 @@ body {
     flex-direction: column;
     justify-content: center; }
 
-.titleMSG {
-  background-color: #d8ddf1;
-  text-align: center;
-  padding: 2rem;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0; }
-  .titleMSG h1 {
-    color: #644cad; }
+.msgPage {
+  height: 100%;
+  display: flex;
+  flex-direction: column; }
 
 .displayContainer {
   display: flex;
   flex-direction: column;
-  flex-basis: 80%;
+  flex: 1;
   background-color: #f7d3d3;
-  padding: 2rem;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-bottom-left-radius: 1rem;
-  border-bottom-right-radius: 1rem; }
+  border-radius: 1rem;
+  border: 2px solid #ce3838;
+  overflow-x: auto; }
   .displayContainer .msgContainer {
     display: flex;
     flex-direction: column;
     flex-basis: 90%;
-    gap: 1rem;
+    gap: 0.5rem;
+    padding: 0 0.2rem;
     overflow-wrap: anywhere; }
     .displayContainer .msgContainer .alignmentLeft {
+      border-radius: 40px 50px 15px 70px;
       align-self: flex-start; }
     .displayContainer .msgContainer .alignmentRight {
+      color: #ce3838;
+      border-radius: 40px 50px 70px 15px;
       align-self: flex-end; }
   .displayContainer .singleMSG {
-    background-color: #fff6f6; }
+    background-color: #fff6f6;
+    color: #644cad;
+    padding: 0 1rem; }
+    .displayContainer .singleMSG span {
+      font-weight: 600;
+      font-size: 1.3rem; }
+
+.msgForm {
+  display: flex;
+  height: 35px;
+  padding: 0.3rem; }
+  .msgForm input {
+    flex: 1;
+    text-align: center;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    outline: none;
+    border: none; }
 
 ul {
   list-style: none;
@@ -510,3 +528,21 @@ template {
     left: 0;
     right: 0;
     opacity: 1; }
+
+.msgBtn {
+  color: #644cad;
+  cursor: pointer;
+  padding: 0 1rem;
+  border: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  transition: box-shadow 0.2s ease-in-out, background 0.2s ease-in-out, color 0.2s ease-in;
+  filter: drop-shadow(10px 5px 10px #ffe9ff); }
+
+.msgBtn:active {
+  background-color: #ffe9ff;
+  box-shadow: 0px -1px 0px -1px;
+  transform: translateY(0.5rem);
+  transition: transform 0.3s ease; }
