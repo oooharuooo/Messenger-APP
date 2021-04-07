@@ -24,10 +24,20 @@ body {
     position: absolute;
     bottom: 65%;
     left: 84%; }
+    @media (min-width: 768px) {
+      .introMSG i {
+        left: 72%; } }
+    @media (min-width: 1440px) {
+      .introMSG i {
+        left: 65%; } }
+    @media (min-width: 1920px) {
+      .introMSG i {
+        left: 58%; } }
 
 .filterTab {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  column-gap: 3rem;
   font-size: 2rem;
   font-family: "Amatic SC", cursive; }
   .filterTab a {
@@ -42,9 +52,6 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.3rem; }
-
-.emailWarning {
-  background-color: antiquewhite; }
 
 .msgColor {
   color: #ce3838;
@@ -66,6 +73,9 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center; }
+    @media (min-width: 768px) {
+      body main {
+        width: 60%; } }
 
 .msgPage {
   height: 100%;
@@ -77,9 +87,15 @@ body {
   flex-direction: column;
   flex: 1;
   background-color: #f7d3d3;
-  border-radius: 1rem;
+  border-radius: 2%;
   border: 2px solid #ce3838;
   overflow-x: auto; }
+  .displayContainer::-webkit-scrollbar {
+    width: 0.5rem; }
+  .displayContainer::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); }
+  .displayContainer::-webkit-scrollbar-thumb {
+    background-color: #644cad7a; }
   .displayContainer .msgContainer {
     display: flex;
     flex-direction: column;

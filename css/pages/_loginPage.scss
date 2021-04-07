@@ -9,12 +9,23 @@
 		position: absolute;
 		bottom: 65%;
 		left: 84%;
+
+		@media (min-width: 768px) {
+			left: 72%;
+		}
+		@media (min-width: 1440px) {
+			left: 65%;
+		}
+		@media (min-width: 1920px) {
+			left: 58%;
+		}
 	}
 }
 
 .filterTab {
 	display: flex;
-	justify-content: space-around;
+	justify-content: center;
+	column-gap: 3rem;
 
 	font-size: 2rem;
 	font-family: "Amatic SC", cursive;
@@ -32,9 +43,6 @@
 	gap: 0.3rem;
 }
 
-.emailWarning {
-	background-color: antiquewhite;
-}
 .msgColor {
 	color: $red;
 

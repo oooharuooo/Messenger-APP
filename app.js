@@ -85,9 +85,10 @@ userLogInForm.addEventListener("submit", (e) => {
 						});
 						// Remove name register form
 						welcomePage.remove();
-
+						nameRegisterForm.remove();
 						// Display msg page
 						msgPage.classList.remove("displayNone");
+						// Append and display values from database to the UI
 						msgRef.on("child_added", updateMsgs);
 					});
 				} else {
@@ -122,8 +123,8 @@ msgForm.addEventListener("submit", (e) => {
 
 	const msgText = document.querySelector("#msg");
 	const { displayName, email } = firebase.auth().currentUser;
-	
-	// 
+
+	//Using Google Realtime Database to store user information
 	const userInfo = {
 		dataName: displayName,
 		dataMsg: msgText.value,
@@ -139,23 +140,18 @@ msgForm.addEventListener("submit", (e) => {
 
 // Append and display values from database to the UI
 const updateMsgs = (data) => {
+	const displayContainer = document.querySelector(".displayContainer");
 	const { dataName, dataMsg, dataEmail } = data.val();
 	const { email } = firebase.auth().currentUser;
 
-	msgContainer.innerHTML += `<li class="singleMSG ${
-		email === dataEmail ? "alignmentRight" : "alignmentLeft"
-	}">
-					<span>${dataName}</span>
-					<p>${dataMsg}</p></li>`;
-	// if (logInEmail.value === email) {
-	// 	msgContainer.innerHTML += `<button>delete</button>`; //add the <li> message to the chat window
-	// }
+	msgContainer.innerHTML += `
+			<li class="singleMSG ${
+				email === dataEmail ? "alignmentRight" : "alignmentLeft"
+			}">
+				<span>${email === dataEmail ? "" : `${dataName} :`}</span>
+				<p>${dataMsg}</p>
+		</li>`;
+
+	// Auto scroll to bottom
 	displayContainer.scrollTop = displayContainer.scrollHeight;
 };
-// msgRef.on("child_added", updateMsgs);
-
-// document.getQuerySelector(
-// 	".displayContainer"
-// ).scrollTop = document.getQuerySelector(".displayContainer").scrollHeight;
-
-const displayContainer = document.querySelector(".displayContainer");
