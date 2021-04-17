@@ -9,6 +9,13 @@
 	flex-direction: column;
 }
 
+@mixin absoluteCentered {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
 @mixin borderRadius(
 	$topLeft: 0,
 	$bottomLeft: 0,

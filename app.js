@@ -5,6 +5,7 @@
 const msgBtn = document.querySelector(".msgBtn");
 const msgForm = document.querySelector(".msgForm");
 const msgContainer = document.querySelector(".msgContainer");
+const displayContainer = document.querySelector(".displayContainer");
 
 const errorMsg = document.querySelector(".errorMsg");
 const logInEmail = document.querySelector("#logInEmail");
@@ -94,9 +95,19 @@ userLogInForm.addEventListener("submit", (e) => {
 				} else {
 					welcomePage.remove();
 					msgPage.classList.remove("displayNone");
-					msgRef.on("child_added", updateMsgs);
+					const welcomeMsgContainer = document.createElement("li");
+					welcomeMsgContainer.classList.add("welcomeMsgContainer");
+					welcomeMsgContainer.innerHTML = `
+					<p>Hello, <span>${user.displayName}</span> <hr> Welcome !!!</p>`;
+
+					msgContainer.appendChild(welcomeMsgContainer);
+					// setTimeout(() => {
+					// 	welcomeMsgContainer.remove();
+					// 	msgRef.on("child_added", updateMsgs);
+					// }, 10000);
 				}
 			})
+
 			.catch((error) => {
 				// Display incorrect msg
 				registeredMsg(errorMsg);
@@ -140,7 +151,6 @@ msgForm.addEventListener("submit", (e) => {
 
 // Append and display values from database to the UI
 const updateMsgs = (data) => {
-	const displayContainer = document.querySelector(".displayContainer");
 	const { dataName, dataMsg, dataEmail } = data.val();
 	const { email } = firebase.auth().currentUser;
 
