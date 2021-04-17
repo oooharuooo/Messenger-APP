@@ -63,9 +63,13 @@ body {
 			font-size: 1.5rem;
 			text-align: center;
 
-			span {
-				color: $red;
-				font-size: 2.5rem;
+			div {
+				width: inherit;
+				background-color: $white;
+				span {
+					color: $red;
+					font-size: 2.5rem;
+				}
 			}
 		}
 

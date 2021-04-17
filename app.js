@@ -15,6 +15,9 @@ const registerName = document.querySelector("#registerName");
 const msgPage = document.querySelector(".msgPage");
 const welcomePage = document.querySelector(".welcomePage");
 
+let userInfo = {};
+let dataName;
+
 /* ******************* */
 /* User Register Form */
 /* ******************* */
@@ -47,6 +50,14 @@ registerForm.addEventListener("submit", (e) => {
 		// [END auth_sign-in_password]
 	};
 
+	// display register successful or fail msg function
+	const registeredMsg = (msg) => {
+		msg.classList.remove("displayNone");
+		setTimeout(() => {
+			msg.classList.add("displayNone");
+		}, 3000);
+	};
+
 	signUpWithEmailPassword();
 
 	// Erase value input
@@ -63,9 +74,11 @@ userLogInForm.addEventListener("submit", (e) => {
 
 	e.preventDefault();
 
-	const signInWithEmailPassword = () => {
+	const signInWithEmailPassword = (user) => {
 		const email = logInEmail.value;
 		const password = logInPassword.value;
+		const userData = firebase.auth().currentUser;
+
 		// [START auth_sign-in_password]
 		firebase
 			.auth()
@@ -76,54 +89,59 @@ userLogInForm.addEventListener("submit", (e) => {
 				formPage.remove();
 
 				// display name register form only if there is no displayName in Database
-				const user = firebase.auth().currentUser;
-				if (user.displayName === null) {
+				if (userData.displayName === null) {
 					nameRegisterForm.classList.remove("displayNone");
 					nameRegisterForm.addEventListener("submit", (e) => {
 						e.preventDefault();
-						user.updateProfile({
+						// Append name to database
+						userData.updateProfile({
 							displayName: registerName.value,
 						});
+						dataName = { dataName: registerName.value };
+						userInfo = { ...dataName };
+
 						// Remove name register form
-						welcomePage.remove();
 						nameRegisterForm.remove();
-						// Display msg page
-						msgPage.classList.remove("displayNone");
-						// Append and display values from database to the UI
-						msgRef.on("child_added", updateMsgs);
+						welcomeBackMsg(registerName);
 					});
 				} else {
-					welcomePage.remove();
-					msgPage.classList.remove("displayNone");
-					const welcomeMsgContainer = document.createElement("li");
-					welcomeMsgContainer.classList.add("welcomeMsgContainer");
-					welcomeMsgContainer.innerHTML = `
-					<p>Hello, <span>${user.displayName}</span> <hr> Welcome !!!</p>`;
-
-					msgContainer.appendChild(welcomeMsgContainer);
-					// setTimeout(() => {
-					// 	welcomeMsgContainer.remove();
-					// 	msgRef.on("child_added", updateMsgs);
-					// }, 10000);
+					welcomeBackMsg(userData);
 				}
 			})
-
 			.catch((error) => {
 				// Display incorrect msg
 				registeredMsg(errorMsg);
 			});
 		// [END auth_sign-in_password]
+
+		// Display welcome back msg if user already registered
+		const welcomeBackMsg = (name) => {
+			// Remove Welcome Page
+			welcomePage.remove();
+			msgPage.classList.remove("displayNone");
+
+			// Display Welcome Msg
+			const welcomeMsgContainer = document.createElement("li");
+
+			welcomeMsgContainer.classList.add("welcomeMsgContainer");
+			welcomeMsgContainer.innerHTML = `
+					<div class="leftToRightEffect">
+						<p>Hello, <span>${name.displayName || registerName.value}</span></p>
+						<p>${name.displayName ? "Welcome back" : "Welcome"} !!!</p>
+					</div>`;
+			msgForm.classList.add("displayNone");
+
+			msgContainer.appendChild(welcomeMsgContainer);
+			// Remove welcome msg and display msg data
+			setTimeout(() => {
+				welcomeMsgContainer.remove();
+				msgForm.classList.remove("displayNone");
+				msgRef.on("child_added", updateMsgs);
+			}, 3000);
+		};
 	};
 	signInWithEmailPassword();
 });
-
-// display success or fail msg function
-const registeredMsg = (msg) => {
-	msg.classList.remove("displayNone");
-	setTimeout(() => {
-		msg.classList.add("displayNone");
-	}, 3000);
-};
 
 /* ******************* */
 /* Msg Form Display */
@@ -136,13 +154,14 @@ msgForm.addEventListener("submit", (e) => {
 	const { displayName, email } = firebase.auth().currentUser;
 
 	//Using Google Realtime Database to store user information
-	const userInfo = {
+	userInfo = {
+		...dataName,
 		dataName: displayName,
 		dataMsg: msgText.value,
 		dataEmail: email,
 	};
 
-	// Push msg text to database
+	// Push user information to database
 	msgRef.push(userInfo);
 
 	// Erase text message

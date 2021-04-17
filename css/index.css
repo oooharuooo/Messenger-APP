@@ -122,9 +122,12 @@ body {
       color: #644cad;
       font-size: 1.5rem;
       text-align: center; }
-      .displayContainer .msgContainer .welcomeMsgContainer span {
-        color: #ce3838;
-        font-size: 2.5rem; }
+      .displayContainer .msgContainer .welcomeMsgContainer div {
+        width: inherit;
+        background-color: #fff6f6; }
+        .displayContainer .msgContainer .welcomeMsgContainer div span {
+          color: #ce3838;
+          font-size: 2.5rem; }
     .displayContainer .msgContainer .alignmentLeft {
       border-radius: 40px 50px 15px 70px;
       align-self: flex-start; }
@@ -506,8 +509,6 @@ template {
   0% {
     transform: translateX(-500%);
     opacity: 0; }
-  75% {
-    transform: translateX(25%); }
   100% {
     transform: translateX(0);
     opacity: 1; } }
