@@ -50,19 +50,19 @@ registerForm.addEventListener("submit", (e) => {
 		// [END auth_sign-in_password]
 	};
 
-	// display register successful or fail msg function
-	const registeredMsg = (msg) => {
-		msg.classList.remove("displayNone");
-		setTimeout(() => {
-			msg.classList.add("displayNone");
-		}, 3000);
-	};
-
 	signUpWithEmailPassword();
 
 	// Erase value input
 	registerForm.reset();
 });
+
+// display register successful or fail msg function
+const registeredMsg = (msg) => {
+	msg.classList.remove("displayNone");
+	setTimeout(() => {
+		msg.classList.add("displayNone");
+	}, 3000);
+};
 
 /* ******************* */
 /* User Login Form */
@@ -77,7 +77,6 @@ userLogInForm.addEventListener("submit", (e) => {
 	const signInWithEmailPassword = (user) => {
 		const email = logInEmail.value;
 		const password = logInPassword.value;
-		const userData = firebase.auth().currentUser;
 
 		// [START auth_sign-in_password]
 		firebase
@@ -87,25 +86,24 @@ userLogInForm.addEventListener("submit", (e) => {
 				// Signed in
 				// Remove Welcome Page and display Msg Page
 				formPage.remove();
-				console.log(userData.displayName);
-				// display name register form only if there is no displayName in Database
-				if (userData.displayName === null) {
-					nameRegisterForm.classList.remove("displayNone");
-					nameRegisterForm.addEventListener("submit", (e) => {
-						e.preventDefault();
-						// Append name to database
-						userData.updateProfile({
-							displayName: registerName.value,
-						});
-						dataName = { dataName: registerName.value };
-						userInfo = { ...dataName };
+				if (userCredential) {
+					// display name register form only if there is no displayName in Database
+					if (userCredential.user.displayName === null) {
+						nameRegisterForm.classList.remove("displayNone");
+						nameRegisterForm.addEventListener("submit", (e) => {
+							e.preventDefault();
+							// Append name to database
+							userCredential.user.displayName = registerName.value;
+							// dataName = { dataName: registerName.value };
+							// userInfo = { ...dataName };
 
-						// Remove name register form
-						nameRegisterForm.remove();
-						welcomeBackMsg(registerName);
-					});
-				} else {
-					welcomeBackMsg(userData);
+							// Remove name register form
+							nameRegisterForm.remove();
+							welcomeBackMsg(registerName);
+						});
+					} else {
+						welcomeBackMsg(userCredential);
+					}
 				}
 			})
 			.catch((error) => {
@@ -126,8 +124,12 @@ userLogInForm.addEventListener("submit", (e) => {
 			welcomeMsgContainer.classList.add("welcomeMsgContainer");
 			welcomeMsgContainer.innerHTML = `
 					<div class="leftToRightEffect">
-						<p>Hello, <span>${name.displayName || registerName.value}</span></p>
-						<p>${name.displayName ? "Welcome back" : "Welcome"} !!!</p>
+						<p>Hello,
+							<span>
+								${name.user.displayName || registerName.value}
+							</span>
+						</p>
+						<p>${name.user.displayName ? "Welcome back" : "Welcome"} !!!</p>
 					</div>`;
 			msgForm.classList.add("displayNone");
 
@@ -160,7 +162,7 @@ msgForm.addEventListener("submit", (e) => {
 
 	//Using Google Realtime Database to store user information
 	userInfo = {
-		...dataName,
+		// ...dataName,
 		uniqueID: postId,
 		dataName: displayName,
 		dataMsg: msgText.value,
@@ -224,10 +226,41 @@ firebase.auth().onAuthStateChanged((user) => {
 		// User is signed in, see docs for a list of available properties
 		// https://firebase.google.com/docs/reference/js/firebase.User
 		var uid = user.uid;
-		console.log(user);
+		console.log(user.displayName);
 		// ...
 	} else {
 		// User is signed out
 		// ...
 	}
 });
+
+document.querySelector(".logOut").addEventListener("click", () => {
+	function signOut() {
+		// [START auth_sign_out]
+		firebase
+			.auth()
+			.signOut()
+			.then(() => {
+				// Sign-out successful.
+			})
+			.catch((error) => {
+				// An error happened.
+			});
+		// [END auth_sign_out]
+	}
+	signOut();
+});
+function signOut() {
+	// [START auth_sign_out]
+	firebase
+		.auth()
+		.signOut()
+		.then(() => {
+			// Sign-out successful.
+		})
+		.catch((error) => {
+			// An error happened.
+		});
+	// [END auth_sign_out]
+}
+// document.addEventListener("DOMContentLoaded", signOut);
