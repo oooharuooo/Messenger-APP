@@ -87,7 +87,7 @@ userLogInForm.addEventListener("submit", (e) => {
 				// Signed in
 				// Remove Welcome Page and display Msg Page
 				formPage.remove();
-
+				console.log(userData.displayName);
 				// display name register form only if there is no displayName in Database
 				if (userData.displayName === null) {
 					nameRegisterForm.classList.remove("displayNone");
@@ -180,12 +180,12 @@ const updateMsgs = (snapshot) => {
 	const { email } = firebase.auth().currentUser;
 
 	msgContainer.innerHTML += `
-			<li class="singleMSG ${
-				email === dataEmail ? "alignmentRight" : "alignmentLeft"
-			}">
+			<li id="msg${uniqueID}" class="singleMSG ${
+		email === dataEmail ? "alignmentRight" : "alignmentLeft"
+	}">
 				<span>${
 					email === dataEmail
-						? `<button class="removeMsgBtn"><i class="fas fa-trash"></i></button>`
+						? `<button data-id="${uniqueID}"class="removeMsgBtn"><i class="fas fa-trash"></i></button>`
 						: `${dataName} :`
 				}</span>
 				<p>${dataMsg}</p>
@@ -194,13 +194,18 @@ const updateMsgs = (snapshot) => {
 	const removeBtn = Array.from(document.querySelectorAll(".removeMsgBtn"));
 	removeBtn.map((btn) => {
 		btn.addEventListener("click", () => {
-			console.log(uniqueID);
+			const btnID = btn.getAttribute("data-id");
 
-			// db.ref("msgs/" + uniqueID).set({
+			msgRef.on("child_removed", (snapshot) => {
+				document.getElementById(`msg${snapshot.key}`).innerHTML =
+					"Message has been removed";
+				console.log(snapshot);
+			});
+			msgRef.child(btnID).remove();
+			// msgRef.child(btnID).set({
 			// 	dataName,
 			// 	dataEmail,
-			// 	uniqueID,
-			// 	dataMsg: "dat",
+			// 	dataMsg: "Message removed",
 			// });
 		});
 	});
@@ -214,28 +219,15 @@ const updateMsgs = (snapshot) => {
 	displayContainer.scrollTop = displayContainer.scrollHeight;
 };
 
-// document.querySelectorAll(".removeMsgBtn").forEach((btn) => {
-// 	const singleMSG = document.querySelector(".singleMSG");
-// 	const updates = { dataMsg: "datzcvgf" };
-// 	// msgRef.on("child_changed", function (snapshot) {
-// 	// 	console.log(snapshot.val(), "child_changed");
-// 	// });
-// 	btn.addEventListener("click", (e) => {
-// 		// msgRef.child(snapshot.key).update(updates);
-// 		// msgRef.on("child_added", updateMsgs);
-// 		// msgRef.child("-MYUl4u3ZmVo7Q0kQMtK").set(
-// 		// 	{
-// 		// 		// dataName: dataName,
-// 		// 		dataMsg: "msgTextz123z",
-// 		// 		// dataEmail: dataEmail,
-// 		// 	}
-// 		// 	// 	msgRef.on("child_added", function (snapshot) {
-// 		// 	// 		console.log(snapshot);
-// 		// 	// 	})
-// 		// 	// );
-// 		// 	// console.log(data.key);
-// 		// );
-// 		console.log("working");
-// 		// console.log(snapshot.key);
-// 	});
-// });
+firebase.auth().onAuthStateChanged((user) => {
+	if (user) {
+		// User is signed in, see docs for a list of available properties
+		// https://firebase.google.com/docs/reference/js/firebase.User
+		var uid = user.uid;
+		console.log(user);
+		// ...
+	} else {
+		// User is signed out
+		// ...
+	}
+});
