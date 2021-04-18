@@ -184,26 +184,26 @@ const updateMsgs = (snapshot) => {
 				email === dataEmail ? "alignmentRight" : "alignmentLeft"
 			}">
 				<span>${
-					email === dataEmail ? "" : `${dataName} :`
-					// ? `<button class="removeMsgBtn"><i class="fas fa-trash"></i></button>`
-					// : `${dataName} :`
+					email === dataEmail
+						? `<button class="removeMsgBtn"><i class="fas fa-trash"></i></button>`
+						: `${dataName} :`
 				}</span>
 				<p>${dataMsg}</p>
 
 		</li>`;
-	// const removeBtn = Array.from(document.querySelectorAll(".removeMsgBtn"));
-	// removeBtn.map((btn) => {
-	// 	btn.addEventListener("click", () => {
-	// 		console.log(uniqueID);
+	const removeBtn = Array.from(document.querySelectorAll(".removeMsgBtn"));
+	removeBtn.map((btn) => {
+		btn.addEventListener("click", () => {
+			console.log(uniqueID);
 
-	// db.ref("msgs/" + uniqueID).set({
-	// 	dataName,
-	// 	dataEmail,
-	// 	uniqueID,
-	// 	dataMsg: "dat",
-	// });
-	// 	});
-	// });
+			// db.ref("msgs/" + uniqueID).set({
+			// 	dataName,
+			// 	dataEmail,
+			// 	uniqueID,
+			// 	dataMsg: "dat",
+			// });
+		});
+	});
 	// data.forEach((snapshot) => {
 	// 	console.log(snapshot.val());
 	// 	console.log(snapshot.key);
