@@ -137,6 +137,7 @@ userLogInForm.addEventListener("submit", (e) => {
 				welcomeMsgContainer.remove();
 				msgForm.classList.remove("displayNone");
 				msgRef.on("child_added", updateMsgs);
+				// msgRef.on("child_changed", removeMsgs);
 			}, 3000);
 		};
 	};
@@ -152,35 +153,89 @@ msgForm.addEventListener("submit", (e) => {
 
 	const msgText = document.querySelector("#msg");
 	const { displayName, email } = firebase.auth().currentUser;
+	const postId = db.ref("/msgs").push().key;
+	// const uniqueID = () => {
+	// 	return "_" + Math.random().toString(36).substr(2, 9);
+	// };
 
 	//Using Google Realtime Database to store user information
 	userInfo = {
 		...dataName,
+		uniqueID: postId,
 		dataName: displayName,
 		dataMsg: msgText.value,
 		dataEmail: email,
 	};
 
 	// Push user information to database
-	msgRef.push(userInfo);
+	db.ref("msgs/" + postId).set(userInfo);
 
 	// Erase text message
 	msgText.value = "";
 });
 
 // Append and display values from database to the UI
-const updateMsgs = (data) => {
-	const { dataName, dataMsg, dataEmail } = data.val();
+const updateMsgs = (snapshot) => {
+	const { dataName, dataMsg, dataEmail, uniqueID } = snapshot.val();
 	const { email } = firebase.auth().currentUser;
 
 	msgContainer.innerHTML += `
 			<li class="singleMSG ${
 				email === dataEmail ? "alignmentRight" : "alignmentLeft"
 			}">
-				<span>${email === dataEmail ? "" : `${dataName} :`}</span>
+				<span>${
+					email === dataEmail ? "" : `${dataName} :`
+					// ? `<button class="removeMsgBtn"><i class="fas fa-trash"></i></button>`
+					// : `${dataName} :`
+				}</span>
 				<p>${dataMsg}</p>
+
 		</li>`;
+	// const removeBtn = Array.from(document.querySelectorAll(".removeMsgBtn"));
+	// removeBtn.map((btn) => {
+	// 	btn.addEventListener("click", () => {
+	// 		console.log(uniqueID);
+
+	// db.ref("msgs/" + uniqueID).set({
+	// 	dataName,
+	// 	dataEmail,
+	// 	uniqueID,
+	// 	dataMsg: "dat",
+	// });
+	// 	});
+	// });
+	// data.forEach((snapshot) => {
+	// 	console.log(snapshot.val());
+	// 	console.log(snapshot.key);
+
+	// });
 
 	// Auto scroll to bottom
 	displayContainer.scrollTop = displayContainer.scrollHeight;
 };
+
+// document.querySelectorAll(".removeMsgBtn").forEach((btn) => {
+// 	const singleMSG = document.querySelector(".singleMSG");
+// 	const updates = { dataMsg: "datzcvgf" };
+// 	// msgRef.on("child_changed", function (snapshot) {
+// 	// 	console.log(snapshot.val(), "child_changed");
+// 	// });
+// 	btn.addEventListener("click", (e) => {
+// 		// msgRef.child(snapshot.key).update(updates);
+// 		// msgRef.on("child_added", updateMsgs);
+// 		// msgRef.child("-MYUl4u3ZmVo7Q0kQMtK").set(
+// 		// 	{
+// 		// 		// dataName: dataName,
+// 		// 		dataMsg: "msgTextz123z",
+// 		// 		// dataEmail: dataEmail,
+// 		// 	}
+// 		// 	// 	msgRef.on("child_added", function (snapshot) {
+// 		// 	// 		console.log(snapshot);
+// 		// 	// 	})
+// 		// 	// );
+// 		// 	// console.log(data.key);
+// 		// );
+// 		console.log("working");
+// 		// console.log(snapshot.key);
+// 	});
+// });
