@@ -27,6 +27,7 @@ registerForm.addEventListener("submit", (e) => {
 	const registerEmail = document.querySelector("#registerEmail");
 	const registerPassword = document.querySelector("#registerPassword");
 	const successMsg = document.querySelector(".successMsg");
+	const errorMsg2 = document.querySelector(".errorMsg-2");
 
 	e.preventDefault();
 
@@ -45,7 +46,7 @@ registerForm.addEventListener("submit", (e) => {
 			})
 			.catch((error) => {
 				// Display error when email is already registered
-				registeredMsg(errorMsg);
+				registeredMsg(errorMsg2);
 			});
 		// [END auth_sign-in_password]
 	};
