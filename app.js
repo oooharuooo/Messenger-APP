@@ -123,10 +123,15 @@ userLogInForm.addEventListener("submit", (e) => {
 			const welcomeMsgContainer = document.createElement("li");
 
 			welcomeMsgContainer.classList.add("welcomeMsgContainer");
+			// welcomeMsgContainer.innerHTML = `
+			// 		<div class="leftToRightEffect">
+			// 			<p>Hello, <span>${name.displayName || registerName.value}</span></p>
+			// 			<p>${name.displayName ? "Welcome back" : "Welcome"} !!!</p>
+			// 		</div>`;
 			welcomeMsgContainer.innerHTML = `
 					<div class="leftToRightEffect">
-						<p>Hello, <span>${name.displayName || registerName.value}</span></p>
-						<p>${name.displayName ? "Welcome back" : "Welcome"} !!!</p>
+	
+						<p>Welcome !!!</p>
 					</div>`;
 			msgForm.classList.add("displayNone");
 
