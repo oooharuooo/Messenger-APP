@@ -100,16 +100,8 @@ userLogInForm.addEventListener("submit", (e) => {
 						userInfo = { ...dataName };
 
 						// Remove name register form
-<<<<<<< HEAD
 						nameRegisterForm.remove();
 						welcomeBackMsg(registerName);
-=======
-						welcomePage.remove();
-
-						// Display msg page
-						msgPage.classList.remove("displayNone");
-						msgRef.on("child_added", updateMsgs);
->>>>>>> parent of 83c0f41 (Project completed (code clean-up needed))
 					});
 				} else {
 					welcomeBackMsg(userData);
@@ -160,7 +152,6 @@ msgForm.addEventListener("submit", (e) => {
 
 	const msgText = document.querySelector("#msg");
 	const { displayName, email } = firebase.auth().currentUser;
-<<<<<<< HEAD
 	const postId = db.ref("/msgs").push().key;
 	// const uniqueID = () => {
 	// 	return "_" + Math.random().toString(36).substr(2, 9);
@@ -170,11 +161,6 @@ msgForm.addEventListener("submit", (e) => {
 	userInfo = {
 		...dataName,
 		uniqueID: postId,
-=======
-	
-	// 
-	const userInfo = {
->>>>>>> parent of 83c0f41 (Project completed (code clean-up needed))
 		dataName: displayName,
 		dataMsg: msgText.value,
 		dataEmail: email,
@@ -188,7 +174,6 @@ msgForm.addEventListener("submit", (e) => {
 });
 
 // Append and display values from database to the UI
-<<<<<<< HEAD
 const updateMsgs = (snapshot) => {
 	const { dataName, dataMsg, dataEmail, uniqueID } = snapshot.val();
 	const { email } = firebase.auth().currentUser;
@@ -253,26 +238,3 @@ const updateMsgs = (snapshot) => {
 // 		// console.log(snapshot.key);
 // 	});
 // });
-=======
-const updateMsgs = (data) => {
-	const { dataName, dataMsg, dataEmail } = data.val();
-	const { email } = firebase.auth().currentUser;
-
-	msgContainer.innerHTML += `<li class="singleMSG ${
-		email === dataEmail ? "alignmentRight" : "alignmentLeft"
-	}">
-					<span>${dataName}</span>
-					<p>${dataMsg}</p></li>`;
-	// if (logInEmail.value === email) {
-	// 	msgContainer.innerHTML += `<button>delete</button>`; //add the <li> message to the chat window
-	// }
-	displayContainer.scrollTop = displayContainer.scrollHeight;
-};
-// msgRef.on("child_added", updateMsgs);
-
-// document.getQuerySelector(
-// 	".displayContainer"
-// ).scrollTop = document.getQuerySelector(".displayContainer").scrollHeight;
-
-const displayContainer = document.querySelector(".displayContainer");
->>>>>>> parent of 83c0f41 (Project completed (code clean-up needed))
