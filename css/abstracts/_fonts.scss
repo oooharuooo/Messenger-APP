@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@100;400;500;700;900&display=swap"),
 	url("https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"),
-	url("https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap"),
-	url("https://fonts.googleapis.com/css2?family=Charmonman:wght@700&display=swap");
+	url("https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap");
 
 body {
 	font-family: "Barlow", sans-serif;
@@ -19,10 +18,6 @@ body {
 	}
 	.displayContainer {
 		font-family: "Kiwi Maru", serif;
-		.welcomeMsgContainer {
-			span {
-				font-family: "Charmonman", cursive;
-			}
-		}
 	}
 }
+
