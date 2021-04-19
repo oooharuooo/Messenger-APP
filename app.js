@@ -49,20 +49,19 @@ registerForm.addEventListener("submit", (e) => {
 		// [END auth_sign-in_password]
 	};
 
-	// display register successful or fail msg function
-	const registeredMsg = (msg) => {
-		msg.classList.remove("displayNone");
-		setTimeout(() => {
-			msg.classList.add("displayNone");
-		}, 3000);
-	};
-
 	signUpWithEmailPassword();
 
 	// Erase value input
 	registerForm.reset();
 });
 
+// display register successful or fail msg function
+const registeredMsg = (msg) => {
+	msg.classList.remove("displayNone");
+	setTimeout(() => {
+		msg.classList.add("displayNone");
+	}, 3000);
+};
 /* ******************* */
 /* User Login Form */
 /* ******************* */
