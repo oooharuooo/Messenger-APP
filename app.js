@@ -104,13 +104,7 @@ userLogInForm.addEventListener("submit", (e) => {
 						welcomeBackMsg(registerName);
 					});
 				} else {
-<<<<<<< HEAD
 					welcomeBackMsg(userData);
-=======
-					welcomePage.remove();
-					msgPage.classList.remove("displayNone");
-					msgRef.on("child_added", updateMsgs);
->>>>>>> parent of 5e41000 (implement welcome msg when user login !)
 				}
 			})
 			.catch((error) => {
@@ -180,14 +174,8 @@ msgForm.addEventListener("submit", (e) => {
 });
 
 // Append and display values from database to the UI
-<<<<<<< HEAD
 const updateMsgs = (snapshot) => {
 	const { dataName, dataMsg, dataEmail, uniqueID } = snapshot.val();
-=======
-const updateMsgs = (data) => {
-	const displayContainer = document.querySelector(".displayContainer");
-	const { dataName, dataMsg, dataEmail } = data.val();
->>>>>>> parent of 5e41000 (implement welcome msg when user login !)
 	const { email } = firebase.auth().currentUser;
 
 	msgContainer.innerHTML += `
