@@ -5,6 +5,7 @@
 const msgBtn = document.querySelector(".msgBtn");
 const msgForm = document.querySelector(".msgForm");
 const msgContainer = document.querySelector(".msgContainer");
+const displayContainer = document.querySelector(".displayContainer");
 
 const errorMsg = document.querySelector(".errorMsg");
 const logInEmail = document.querySelector("#logInEmail");
@@ -189,51 +190,5 @@ const updateMsgs = (snapshot) => {
 				<p>${dataMsg}</p>
 
 		</li>`;
-	// const removeBtn = Array.from(document.querySelectorAll(".removeMsgBtn"));
-	// removeBtn.map((btn) => {
-	// 	btn.addEventListener("click", () => {
-	// 		console.log(uniqueID);
-
-	// db.ref("msgs/" + uniqueID).set({
-	// 	dataName,
-	// 	dataEmail,
-	// 	uniqueID,
-	// 	dataMsg: "dat",
-	// });
-	// 	});
-	// });
-	// data.forEach((snapshot) => {
-	// 	console.log(snapshot.val());
-	// 	console.log(snapshot.key);
-
-	// });
-
-	// Auto scroll to bottom
 	displayContainer.scrollTop = displayContainer.scrollHeight;
 };
-
-// document.querySelectorAll(".removeMsgBtn").forEach((btn) => {
-// 	const singleMSG = document.querySelector(".singleMSG");
-// 	const updates = { dataMsg: "datzcvgf" };
-// 	// msgRef.on("child_changed", function (snapshot) {
-// 	// 	console.log(snapshot.val(), "child_changed");
-// 	// });
-// 	btn.addEventListener("click", (e) => {
-// 		// msgRef.child(snapshot.key).update(updates);
-// 		// msgRef.on("child_added", updateMsgs);
-// 		// msgRef.child("-MYUl4u3ZmVo7Q0kQMtK").set(
-// 		// 	{
-// 		// 		// dataName: dataName,
-// 		// 		dataMsg: "msgTextz123z",
-// 		// 		// dataEmail: dataEmail,
-// 		// 	}
-// 		// 	// 	msgRef.on("child_added", function (snapshot) {
-// 		// 	// 		console.log(snapshot);
-// 		// 	// 	})
-// 		// 	// );
-// 		// 	// console.log(data.key);
-// 		// );
-// 		console.log("working");
-// 		// console.log(snapshot.key);
-// 	});
-// });
