@@ -196,17 +196,17 @@ userLogInForm.addEventListener("submit", (e) => {
 						btn.addEventListener("click", () => {
 							const btnID = btn.getAttribute("data-id");
 
-							msgRef.on("child_changed", (snapshot) => {
-								document.getElementById(`msg${snapshot.key}`).innerHTML =
-									"Message has been removed";
-								console.log(snapshot);
-							});
-							// msgRef.child(btnID).remove();
-							msgRef.child(btnID).set({
-								dataName: userCredential.user.displayName,
-								dataEmail: userCredential.user.email,
-								dataMsg: "Message removed",
-							});
+							// msgRef.on("child_changed", (snapshot) => {
+							// 	document.getElementById(`msg${snapshot.key}`).innerHTML =
+							// 		"Message has been removed";
+							// 	console.log(snapshot);
+							// });
+							// // msgRef.child(btnID).remove();
+							// msgRef.child(btnID).set({
+							// 	dataName: userCredential.user.displayName,
+							// 	dataEmail: userCredential.user.email,
+							// 	dataMsg: "Message removed",
+							// });
 						});
 					});
 
