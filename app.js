@@ -84,6 +84,38 @@ userLogInForm.addEventListener("submit", (e) => {
 			.auth()
 			.signInWithEmailAndPassword(email, password)
 			.then((userCredential) => {
+				console.log(userCredential);
+
+				// Display welcome back msg if user already registered
+				const welcomeBackMsg = (name) => {
+					// Remove Welcome Page
+					welcomePage.remove();
+					msgPage.classList.remove("displayNone");
+
+					// Display Welcome Msg
+					const welcomeMsgContainer = document.createElement("li");
+
+					welcomeMsgContainer.classList.add("welcomeMsgContainer");
+					welcomeMsgContainer.innerHTML = `
+					<div class="leftToRightEffect">
+						<p>Hello,
+							<span>
+								${name.user.displayName || registerName.value}
+							</span>
+						</p>
+						<p>${name.user.displayName ? "Welcome back" : "Welcome"} !!!</p>
+					</div>`;
+					msgForm.classList.add("displayNone");
+
+					msgContainer.appendChild(welcomeMsgContainer);
+					// Remove welcome msg and display msg data
+					setTimeout(() => {
+						welcomeMsgContainer.remove();
+						msgForm.classList.remove("displayNone");
+						msgRef.on("child_added", updateMsgs);
+						// msgRef.on("child_changed", removeMsgs);
+					}, 3000);
+				};
 				// Signed in
 				// Remove Welcome Page and display Msg Page
 				formPage.remove();
@@ -106,162 +138,130 @@ userLogInForm.addEventListener("submit", (e) => {
 						welcomeBackMsg(userCredential);
 					}
 				}
-			})
-			.catch((error) => {
-				// Display incorrect msg
-				registeredMsg(errorMsg);
-			});
-		// [END auth_sign-in_password]
 
-		// Display welcome back msg if user already registered
-		const welcomeBackMsg = (name) => {
-			// Remove Welcome Page
-			welcomePage.remove();
-			msgPage.classList.remove("displayNone");
+				/* ******************* */
+				/* Msg Form Display */
+				/* ******************* */
 
-			// Display Welcome Msg
-			const welcomeMsgContainer = document.createElement("li");
+				msgForm.addEventListener("submit", (e) => {
+					e.preventDefault();
 
-			welcomeMsgContainer.classList.add("welcomeMsgContainer");
-			welcomeMsgContainer.innerHTML = `
-					<div class="leftToRightEffect">
-						<p>Hello,
-							<span>
-								${name.user.displayName || registerName.value}
-							</span>
-						</p>
-						<p>${name.user.displayName ? "Welcome back" : "Welcome"} !!!</p>
-					</div>`;
-			msgForm.classList.add("displayNone");
+					const msgText = document.querySelector("#msg");
+					// const { displayName, email } = firebase.auth().currentUser;
+					const postId = db.ref("/msgs").push().key;
+					// const uniqueID = () => {
+					// 	return "_" + Math.random().toString(36).substr(2, 9);
+					// };
 
-			msgContainer.appendChild(welcomeMsgContainer);
-			// Remove welcome msg and display msg data
-			setTimeout(() => {
-				welcomeMsgContainer.remove();
-				msgForm.classList.remove("displayNone");
-				msgRef.on("child_added", updateMsgs);
-				// msgRef.on("child_changed", removeMsgs);
-			}, 3000);
-		};
-	};
-	signInWithEmailPassword();
-});
+					//Using Google Realtime Database to store user information
+					userInfo = {
+						// ...dataName,
+						uniqueID: postId,
+						dataName: userCredential.user.displayName,
+						dataMsg: msgText.value,
+						dataEmail: userCredential.user.email,
+					};
 
-/* ******************* */
-/* Msg Form Display */
-/* ******************* */
+					// Push user information to database
+					db.ref("msgs/" + postId).set(userInfo);
 
-msgForm.addEventListener("submit", (e) => {
-	e.preventDefault();
+					// Erase text message
+					msgText.value = "";
+				});
 
-	const msgText = document.querySelector("#msg");
-	const { displayName, email } = firebase.auth().currentUser;
-	const postId = db.ref("/msgs").push().key;
-	// const uniqueID = () => {
-	// 	return "_" + Math.random().toString(36).substr(2, 9);
-	// };
+				// Append and display values from database to the UI
+				const updateMsgs = (snapshot) => {
+					const { dataName, dataMsg, dataEmail, uniqueID } = snapshot.val();
+					const { email } = firebase.auth().currentUser;
 
-	//Using Google Realtime Database to store user information
-	userInfo = {
-		// ...dataName,
-		uniqueID: postId,
-		dataName: displayName,
-		dataMsg: msgText.value,
-		dataEmail: email,
-	};
-
-	// Push user information to database
-	db.ref("msgs/" + postId).set(userInfo);
-
-	// Erase text message
-	msgText.value = "";
-});
-
-// Append and display values from database to the UI
-const updateMsgs = (snapshot) => {
-	const { dataName, dataMsg, dataEmail, uniqueID } = snapshot.val();
-	const { email } = firebase.auth().currentUser;
-
-	msgContainer.innerHTML += `
+					msgContainer.innerHTML += `
 			<li id="msg${uniqueID}" class="singleMSG ${
-		email === dataEmail ? "alignmentRight" : "alignmentLeft"
-	}">
+						userCredential.user.email === dataEmail
+							? "alignmentRight"
+							: "alignmentLeft"
+					}">
 				<span>${
-					email === dataEmail
+					userCredential.user.email === dataEmail
 						? `<button data-id="${uniqueID}"class="removeMsgBtn"><i class="fas fa-trash"></i></button>`
 						: `${dataName} :`
 				}</span>
 				<p>${dataMsg}</p>
 
 		</li>`;
-	const removeBtn = Array.from(document.querySelectorAll(".removeMsgBtn"));
-	removeBtn.map((btn) => {
-		btn.addEventListener("click", () => {
-			const btnID = btn.getAttribute("data-id");
+					const removeBtn = Array.from(
+						document.querySelectorAll(".removeMsgBtn")
+					);
+					removeBtn.map((btn) => {
+						btn.addEventListener("click", () => {
+							const btnID = btn.getAttribute("data-id");
 
-			msgRef.on("child_removed", (snapshot) => {
-				document.getElementById(`msg${snapshot.key}`).innerHTML =
-					"Message has been removed";
-				console.log(snapshot);
-			});
-			msgRef.child(btnID).remove();
-			// msgRef.child(btnID).set({
-			// 	dataName,
-			// 	dataEmail,
-			// 	dataMsg: "Message removed",
-			// });
-		});
-	});
-	// data.forEach((snapshot) => {
-	// 	console.log(snapshot.val());
-	// 	console.log(snapshot.key);
+							msgRef.on("child_changed", (snapshot) => {
+								document.getElementById(`msg${snapshot.key}`).innerHTML =
+									"Message has been removed";
+								console.log(snapshot);
+							});
+							// msgRef.child(btnID).remove();
+							msgRef.child(btnID).set({
+								dataName: userCredential.user.displayName,
+								dataEmail: userCredential.user.email,
+								dataMsg: "Message removed",
+							});
+						});
+					});
 
-	// });
-
-	// Auto scroll to bottom
-	displayContainer.scrollTop = displayContainer.scrollHeight;
-};
-
-firebase.auth().onAuthStateChanged((user) => {
-	if (user) {
-		// User is signed in, see docs for a list of available properties
-		// https://firebase.google.com/docs/reference/js/firebase.User
-		var uid = user.uid;
-		console.log(user.displayName);
-		// ...
-	} else {
-		// User is signed out
-		// ...
-	}
-});
-
-document.querySelector(".logOut").addEventListener("click", () => {
-	function signOut() {
-		// [START auth_sign_out]
-		firebase
-			.auth()
-			.signOut()
-			.then(() => {
-				// Sign-out successful.
+					// Auto scroll to bottom
+					displayContainer.scrollTop = displayContainer.scrollHeight;
+				};
 			})
 			.catch((error) => {
-				// An error happened.
+				// Display incorrect msg
+				registeredMsg(errorMsg);
 			});
-		// [END auth_sign_out]
-	}
-	signOut();
+		// [END auth_sign-in_password]
+	};
+	signInWithEmailPassword();
 });
-function signOut() {
-	// [START auth_sign_out]
-	firebase
-		.auth()
-		.signOut()
-		.then(() => {
-			// Sign-out successful.
-		})
-		.catch((error) => {
-			// An error happened.
-		});
-	// [END auth_sign_out]
-}
+
+// firebase.auth().onAuthStateChanged((user) => {
+// 	if (user) {
+// 		// User is signed in, see docs for a list of available properties
+// 		// https://firebase.google.com/docs/reference/js/firebase.User
+// 		var uid = user.uid;
+// 		console.log(user.displayName);
+// 		// ...
+// 	} else {
+// 		// User is signed out
+// 		// ...
+// 	}
+// });
+
+// document.querySelector(".logOut").addEventListener("click", () => {
+// 	function signOut() {
+// 		// [START auth_sign_out]
+// 		firebase
+// 			.auth()
+// 			.signOut()
+// 			.then(() => {
+// 				// Sign-out successful.
+// 			})
+// 			.catch((error) => {
+// 				// An error happened.
+// 			});
+// 		// [END auth_sign_out]
+// 	}
+// 	signOut();
+// });
+// function signOut() {
+// 	// [START auth_sign_out]
+// 	firebase
+// 		.auth()
+// 		.signOut()
+// 		.then(() => {
+// 			// Sign-out successful.
+// 		})
+// 		.catch((error) => {
+// 			// An error happened.
+// 		});
+// 	// [END auth_sign_out]
+// }
 // document.addEventListener("DOMContentLoaded", signOut);
