@@ -4,6 +4,12 @@
 	justify-content: center;
 }
 
+@mixin absoluteCentered {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
 @mixin flexColumn {
 	display: flex;
 	flex-direction: column;
@@ -20,4 +26,3 @@
 	border-top-right-radius: $topRight;
 	border-bottom-right-radius: $bottomRight;
 }
-// d
