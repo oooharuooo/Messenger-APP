@@ -25,7 +25,6 @@
 		background-color: $third;
 	}
 }
-
 .formFlex {
 	@include flexColumn;
 	@include flexCenter;
@@ -46,3 +45,4 @@
 a {
 	text-decoration: none;
 }
+
