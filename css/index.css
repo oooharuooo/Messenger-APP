@@ -571,6 +571,7 @@ template {
 .msgBtn {
   color: #644cad;
   cursor: pointer;
+  outline: none;
   padding: 0 1rem;
   border: none;
   border-top-left-radius: 0;
@@ -579,9 +580,12 @@ template {
   border-bottom-right-radius: 15px;
   transition: box-shadow 0.2s ease-in-out, background 0.2s ease-in-out, color 0.2s ease-in;
   filter: drop-shadow(10px 5px 10px #ffe9ff); }
+  .msgBtn:active {
+    background-color: #ffe9ff;
+    box-shadow: 0px -1px 0px -1px;
+    transform: translateY(0.5rem);
+    transition: transform 0.3s ease; }
 
-.msgBtn:active {
-  background-color: #ffe9ff;
-  box-shadow: 0px -1px 0px -1px;
-  transform: translateY(0.5rem);
-  transition: transform 0.3s ease; }
+.removeMsgBtn {
+  color: red;
+  padding: 0; }

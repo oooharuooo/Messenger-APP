@@ -15,9 +15,6 @@ const registerName = document.querySelector("#registerName");
 const msgPage = document.querySelector(".msgPage");
 const welcomePage = document.querySelector(".welcomePage");
 
-let userInfo = {};
-let dataName;
-
 /* ******************* */
 /* User Register Form */
 /* ******************* */
@@ -149,16 +146,10 @@ userLogInForm.addEventListener("submit", (e) => {
 					e.preventDefault();
 
 					const msgText = document.querySelector("#msg");
-					// const { displayName, email } = firebase.auth().currentUser;
 					const postId = db.ref("/msgs").push().key;
-					// const uniqueID = () => {
-					// 	return "_" + Math.random().toString(36).substr(2, 9);
-					// };
 
 					//Using Google Realtime Database to store user information
 					userInfo = {
-						// ...dataName,
-						uniqueID: postId,
 						dataName: userCredential.user.displayName,
 						dataMsg: msgText.value,
 						dataEmail: userCredential.user.email,
@@ -173,42 +164,44 @@ userLogInForm.addEventListener("submit", (e) => {
 
 				// Append and display values from database to the UI
 				const updateMsgs = (snapshot) => {
-					const { dataName, dataMsg, dataEmail, uniqueID } = snapshot.val();
-					const { email } = firebase.auth().currentUser;
+					const { dataName, dataMsg, dataEmail } = snapshot.val();
+					const uniqueID = snapshot.key;
+					const emailCompare = userCredential.user.email === dataEmail;
 
 					msgContainer.innerHTML += `
 			<li id="msg${uniqueID}" class="singleMSG ${
-						userCredential.user.email === dataEmail
-							? "alignmentRight"
-							: "alignmentLeft"
+						emailCompare ? "alignmentRight" : "alignmentLeft"
 					}">
-				<span>${
-					userCredential.user.email === dataEmail
-						? `<button data-id="${uniqueID}"class="removeMsgBtn"><i class="fas fa-trash"></i></button>`
-						: `${dataName} :`
-				}</span>
+				<span>${emailCompare ? "" : `${dataName} :`}</span>
+				<span>
+					${
+						emailCompare && dataMsg !== "Message removed"
+							? `<button data-id="${uniqueID}"class="removeMsgBtn msgBtn">
+							<i class="fas fa-trash"></i>
+							</button>`
+							: ""
+					}
+				</span>
 				<p>${dataMsg}</p>
+			</li>`;
 
-		</li>`;
-					const removeBtn = Array.from(
-						document.querySelectorAll(".removeMsgBtn")
-					);
-					removeBtn.map((btn) => {
+					const removeBtn = document.querySelectorAll(".removeMsgBtn");
+					removeBtn.forEach((btn) => {
 						btn.addEventListener("click", () => {
 							const btnID = btn.getAttribute("data-id");
 
-							// msgRef.on("child_changed", (snapshot) => {
-							// 	document.getElementById(`msg${snapshot.key}`).innerHTML =
-							// 		"Message has been removed";
-							// 	console.log(snapshot);
-							// });
-							// // msgRef.child(btnID).remove();
-							// msgRef.child(btnID).set({
-							// 	dataName: userCredential.user.displayName,
-							// 	dataEmail: userCredential.user.email,
-							// 	dataMsg: "Message removed",
-							// });
+							btn.remove();
+							msgRef.child(btnID).set({
+								dataName: userCredential.user.displayName,
+								dataEmail: userCredential.user.email,
+								dataMsg: "Message removed",
+							});
 						});
+					});
+
+					msgRef.on("child_changed", (snapshot) => {
+						document.getElementById(`msg${snapshot.key}`).innerHTML =
+							"Message removed";
 					});
 
 					// Auto scroll to bottom
