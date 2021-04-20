@@ -562,7 +562,8 @@ template {
   border-bottom-left-radius: 0;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
-  transition: box-shadow 0.2s ease-in-out, background 0.2s ease-in-out, color 0.2s ease-in;
+  transition: box-shadow 0.2s ease-in-out, background 0.2s ease-in-out,
+ color 0.2s ease-in;
   filter: drop-shadow(10px 5px 10px #ffe9ff); }
 
 .msgBtn:active {
