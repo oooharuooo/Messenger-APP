@@ -86,12 +86,11 @@ userLogInForm.addEventListener("submit", (e) => {
 				// Remove Login Page
 				formPage.remove();
 				welcomePage.remove();
+				console.log(userCredential);
 
 				// Display Welcome Msg
-				msgPage.classList.remove("displayNone");
-
 				const welcomeBackMsg = (name) => {
-					// Display Welcome Msg
+					msgPage.classList.remove("displayNone");
 					const welcomeMsgContainer = document.createElement("li");
 
 					welcomeMsgContainer.classList.add("welcomeMsgContainer");
@@ -99,10 +98,10 @@ userLogInForm.addEventListener("submit", (e) => {
 					<div class="leftToRightEffect">
 						<p>Hello,
 							<span>
-								${displayName || registerName.value}
+								${registerName.value || displayName}
 							</span>
 						</p>
-						<p>${displayName ? "Welcome back" : "Welcome"} !!!</p>
+						<p>${registerName.value ? "Welcome" : "Welcome back"} !!!</p>
 					</div>`;
 					msgForm.classList.add("displayNone");
 
@@ -115,29 +114,29 @@ userLogInForm.addEventListener("submit", (e) => {
 					}, 3000);
 				};
 
-				// Signed in
 				if (userCredential) {
-					// display name register form only if there is no displayName in Database
-					if (displayName === null) {
+					if (userCredential.user.displayName === null) {
+						// display name register form only if there is no displayName in Database
 						nameRegisterForm.classList.remove("displayNone");
 						nameRegisterForm.addEventListener("submit", (e) => {
 							e.preventDefault();
 							// Append name to database
-							displayName = registerName.value;
+							userCredential.user.displayName = registerName.value;
+							console.log(userCredential.user.displayName);
 
 							// Remove name register form
 							nameRegisterForm.remove();
 							welcomeBackMsg(registerName);
 						});
 					} else {
-						welcomeBackMsg(userCredential);
+						welcomeBackMsg();
 					}
 				}
-
 				/* ******************* */
 				/* Msg Form Display */
 				/* ******************* */
 
+				// Send Msg Handler
 				msgForm.addEventListener("submit", (e) => {
 					e.preventDefault();
 
@@ -146,7 +145,7 @@ userLogInForm.addEventListener("submit", (e) => {
 
 					//Using Google Realtime Database to store user information
 					userInfo = {
-						dataName: displayName,
+						dataName: userCredential.user.displayName,
 						dataMsg: msgText.value,
 						dataEmail: displayEmail,
 					};
