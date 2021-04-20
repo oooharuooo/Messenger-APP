@@ -266,4 +266,3 @@ userLogInForm.addEventListener("submit", (e) => {
 // 		});
 // 	// [END auth_sign_out]
 // }
-// document.addEventListener("DOMContentLoaded", signOut);
