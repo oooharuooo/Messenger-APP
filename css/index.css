@@ -24,10 +24,20 @@ body {
     position: absolute;
     bottom: 65%;
     left: 84%; }
+    @media (min-width: 768px) {
+      .introMSG i {
+        left: 72%; } }
+    @media (min-width: 1440px) {
+      .introMSG i {
+        left: 65%; } }
+    @media (min-width: 1920px) {
+      .introMSG i {
+        left: 58%; } }
 
 .filterTab {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  column-gap: 3rem;
   font-size: 2rem;
   font-family: "Amatic SC", cursive; }
   .filterTab a {
@@ -42,9 +52,6 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.3rem; }
-
-.emailWarning {
-  background-color: antiquewhite; }
 
 .msgColor {
   color: #ce3838;
