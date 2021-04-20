@@ -15,6 +15,9 @@ const registerName = document.querySelector("#registerName");
 const msgPage = document.querySelector(".msgPage");
 const welcomePage = document.querySelector(".welcomePage");
 
+let userInfo = {};
+let dataName;
+
 /* ******************* */
 /* User Register Form */
 /* ******************* */
@@ -81,6 +84,7 @@ userLogInForm.addEventListener("submit", (e) => {
 			.auth()
 			.signInWithEmailAndPassword(email, password)
 			.then((userCredential) => {
+<<<<<<< HEAD
 				// Log-in
 				const { displayName, email: displayEmail } = userCredential.user;
 				// Remove Login Page
@@ -91,6 +95,17 @@ userLogInForm.addEventListener("submit", (e) => {
 				// Display Welcome Msg
 				const welcomeBackMsg = (name) => {
 					msgPage.classList.remove("displayNone");
+=======
+				console.log(userCredential);
+
+				// Display welcome back msg if user already registered
+				const welcomeBackMsg = (name) => {
+					// Remove Welcome Page
+					welcomePage.remove();
+					msgPage.classList.remove("displayNone");
+
+					// Display Welcome Msg
+>>>>>>> parent of 7147c64 (refactor html file)
 					const welcomeMsgContainer = document.createElement("li");
 
 					welcomeMsgContainer.classList.add("welcomeMsgContainer");
@@ -98,10 +113,17 @@ userLogInForm.addEventListener("submit", (e) => {
 					<div class="leftToRightEffect">
 						<p>Hello,
 							<span>
+<<<<<<< HEAD
 								${registerName.value || displayName}
 							</span>
 						</p>
 						<p>${registerName.value ? "Welcome" : "Welcome back"} !!!</p>
+=======
+								${name.user.displayName || registerName.value}
+							</span>
+						</p>
+						<p>${name.user.displayName ? "Welcome back" : "Welcome"} !!!</p>
+>>>>>>> parent of 7147c64 (refactor html file)
 					</div>`;
 					msgForm.classList.add("displayNone");
 
@@ -111,18 +133,33 @@ userLogInForm.addEventListener("submit", (e) => {
 						welcomeMsgContainer.remove();
 						msgForm.classList.remove("displayNone");
 						msgRef.on("child_added", updateMsgs);
+						// msgRef.on("child_changed", removeMsgs);
 					}, 3000);
 				};
+<<<<<<< HEAD
 
 				if (userCredential) {
 					if (userCredential.user.displayName === null) {
 						// display name register form only if there is no displayName in Database
+=======
+				// Signed in
+				// Remove Welcome Page and display Msg Page
+				formPage.remove();
+				if (userCredential) {
+					// display name register form only if there is no displayName in Database
+					if (userCredential.user.displayName === null) {
+>>>>>>> parent of 7147c64 (refactor html file)
 						nameRegisterForm.classList.remove("displayNone");
 						nameRegisterForm.addEventListener("submit", (e) => {
 							e.preventDefault();
 							// Append name to database
 							userCredential.user.displayName = registerName.value;
+<<<<<<< HEAD
 							console.log(userCredential.user.displayName);
+=======
+							// dataName = { dataName: registerName.value };
+							// userInfo = { ...dataName };
+>>>>>>> parent of 7147c64 (refactor html file)
 
 							// Remove name register form
 							nameRegisterForm.remove();
@@ -141,13 +178,22 @@ userLogInForm.addEventListener("submit", (e) => {
 					e.preventDefault();
 
 					const msgText = document.querySelector("#msg");
+					// const { displayName, email } = firebase.auth().currentUser;
 					const postId = db.ref("/msgs").push().key;
+					// const uniqueID = () => {
+					// 	return "_" + Math.random().toString(36).substr(2, 9);
+					// };
 
 					//Using Google Realtime Database to store user information
 					userInfo = {
+<<<<<<< HEAD
+=======
+						// ...dataName,
+						uniqueID: postId,
+>>>>>>> parent of 7147c64 (refactor html file)
 						dataName: userCredential.user.displayName,
 						dataMsg: msgText.value,
-						dataEmail: displayEmail,
+						dataEmail: userCredential.user.email,
 					};
 
 					// Push user information to database
@@ -159,21 +205,23 @@ userLogInForm.addEventListener("submit", (e) => {
 
 				// Append and display values from database to the UI
 				const updateMsgs = (snapshot) => {
-					const { dataName, dataMsg, dataEmail } = snapshot.val();
-					const uniqueID = snapshot.key;
+					const { dataName, dataMsg, dataEmail, uniqueID } = snapshot.val();
+					const { email } = firebase.auth().currentUser;
 
 					msgContainer.innerHTML += `
-						<li id="msg${uniqueID}" class="singleMSG ${
-						displayEmail === dataEmail ? "alignmentRight" : "alignmentLeft"
+			<li id="msg${uniqueID}" class="singleMSG ${
+						userCredential.user.email === dataEmail
+							? "alignmentRight"
+							: "alignmentLeft"
 					}">
-							<span>${
-								userCredential.user.email === dataEmail
-									? `<button data-id="${uniqueID}"class="removeMsgBtn"><i class="fas fa-trash"></i></button>`
-									: `${dataName} :`
-							}</span>
-							<p>${dataMsg}</p>
-						</li>`;
+				<span>${
+					userCredential.user.email === dataEmail
+						? `<button data-id="${uniqueID}"class="removeMsgBtn"><i class="fas fa-trash"></i></button>`
+						: `${dataName} :`
+				}</span>
+				<p>${dataMsg}</p>
 
+		</li>`;
 					const removeBtn = Array.from(
 						document.querySelectorAll(".removeMsgBtn")
 					);
@@ -184,11 +232,12 @@ userLogInForm.addEventListener("submit", (e) => {
 							msgRef.on("child_changed", (snapshot) => {
 								document.getElementById(`msg${snapshot.key}`).innerHTML =
 									"Message has been removed";
+								console.log(snapshot);
 							});
 							// msgRef.child(btnID).remove();
 							msgRef.child(btnID).set({
-								dataName: displayName,
-								dataEmail: displayEmail,
+								dataName: userCredential.user.displayName,
+								dataEmail: userCredential.user.email,
 								dataMsg: "Message removed",
 							});
 						});
