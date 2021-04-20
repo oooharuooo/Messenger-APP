@@ -84,18 +84,6 @@ userLogInForm.addEventListener("submit", (e) => {
 			.auth()
 			.signInWithEmailAndPassword(email, password)
 			.then((userCredential) => {
-<<<<<<< HEAD
-				// Log-in
-				const { displayName, email: displayEmail } = userCredential.user;
-				// Remove Login Page
-				formPage.remove();
-				welcomePage.remove();
-				console.log(userCredential);
-
-				// Display Welcome Msg
-				const welcomeBackMsg = (name) => {
-					msgPage.classList.remove("displayNone");
-=======
 				console.log(userCredential);
 
 				// Display welcome back msg if user already registered
@@ -105,7 +93,6 @@ userLogInForm.addEventListener("submit", (e) => {
 					msgPage.classList.remove("displayNone");
 
 					// Display Welcome Msg
->>>>>>> parent of 7147c64 (refactor html file)
 					const welcomeMsgContainer = document.createElement("li");
 
 					welcomeMsgContainer.classList.add("welcomeMsgContainer");
@@ -113,17 +100,10 @@ userLogInForm.addEventListener("submit", (e) => {
 					<div class="leftToRightEffect">
 						<p>Hello,
 							<span>
-<<<<<<< HEAD
-								${registerName.value || displayName}
+								${registerName.value || name.user.displayName}
 							</span>
 						</p>
 						<p>${registerName.value ? "Welcome" : "Welcome back"} !!!</p>
-=======
-								${name.user.displayName || registerName.value}
-							</span>
-						</p>
-						<p>${name.user.displayName ? "Welcome back" : "Welcome"} !!!</p>
->>>>>>> parent of 7147c64 (refactor html file)
 					</div>`;
 					msgForm.classList.add("displayNone");
 
@@ -133,40 +113,31 @@ userLogInForm.addEventListener("submit", (e) => {
 						welcomeMsgContainer.remove();
 						msgForm.classList.remove("displayNone");
 						msgRef.on("child_added", updateMsgs);
-						// msgRef.on("child_changed", removeMsgs);
 					}, 3000);
 				};
-<<<<<<< HEAD
-
-				if (userCredential) {
-					if (userCredential.user.displayName === null) {
-						// display name register form only if there is no displayName in Database
-=======
 				// Signed in
 				// Remove Welcome Page and display Msg Page
 				formPage.remove();
 				if (userCredential) {
 					// display name register form only if there is no displayName in Database
 					if (userCredential.user.displayName === null) {
->>>>>>> parent of 7147c64 (refactor html file)
+						const currentUser = firebase.auth().currentUser;
 						nameRegisterForm.classList.remove("displayNone");
 						nameRegisterForm.addEventListener("submit", (e) => {
 							e.preventDefault();
 							// Append name to database
 							userCredential.user.displayName = registerName.value;
-<<<<<<< HEAD
-							console.log(userCredential.user.displayName);
-=======
-							// dataName = { dataName: registerName.value };
-							// userInfo = { ...dataName };
->>>>>>> parent of 7147c64 (refactor html file)
+							currentUser.updateProfile({
+								displayName: registerName.value,
+							});
+							console.log(userCredential);
 
 							// Remove name register form
 							nameRegisterForm.remove();
 							welcomeBackMsg(registerName);
 						});
 					} else {
-						welcomeBackMsg();
+						welcomeBackMsg(userCredential);
 					}
 				}
 				/* ******************* */
@@ -186,11 +157,8 @@ userLogInForm.addEventListener("submit", (e) => {
 
 					//Using Google Realtime Database to store user information
 					userInfo = {
-<<<<<<< HEAD
-=======
 						// ...dataName,
 						uniqueID: postId,
->>>>>>> parent of 7147c64 (refactor html file)
 						dataName: userCredential.user.displayName,
 						dataMsg: msgText.value,
 						dataEmail: userCredential.user.email,
