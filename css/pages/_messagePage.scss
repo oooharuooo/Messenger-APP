@@ -7,6 +7,10 @@ body {
 		height: 100%;
 		@include flexColumn;
 		justify-content: center;
+
+		@media (min-width: 768px) {
+			width: 60%;
+		}
 	}
 }
 
@@ -20,23 +24,22 @@ body {
 
 	background-color: $primary;
 
-	border-radius: 1rem;
+	border-radius: 2%;
 	border: 2px solid $red;
 
 	overflow-x: auto;
 
-	// &::-webkit-scrollbar {
-	// 	width: 1em;
-	// }
+	&::-webkit-scrollbar {
+		width: 0.5rem;
+	}
 
-	// &::-webkit-scrollbar-track {
-	// 	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-	// }
+	&::-webkit-scrollbar-track {
+		box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	}
 
-	// &::-webkit-scrollbar-thumb {
-	// 	background-color: darkgrey;
-	// 	outline: 1px solid slategrey;
-	// }
+	&::-webkit-scrollbar-thumb {
+		background-color: #644cad7a;
+	}
 
 	.msgContainer {
 		@include flexColumn;
@@ -45,7 +48,6 @@ body {
 		padding: 0 0.2rem;
 
 		overflow-wrap: anywhere;
-<<<<<<< HEAD
 		position: relative;
 
 		.welcomeMsgContainer {
@@ -70,8 +72,6 @@ body {
 				}
 			}
 		}
-=======
->>>>>>> parent of 5e41000 (implement welcome msg when user login !)
 
 		.alignmentLeft {
 			border-radius: 40px 50px 15px 70px;
@@ -102,7 +102,7 @@ body {
 	input {
 		flex: 1;
 		text-align: center;
-		
+
 		@include borderRadius(15px, 15px);
 		outline: none;
 		border: none;
