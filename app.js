@@ -76,13 +76,23 @@ userLogInForm.addEventListener("submit", (e) => {
 		const email = logInEmail.value;
 		const password = logInPassword.value;
 
+		// const currentUser = firebase.auth().currentUser;
+		// console.log(currentUser.displayName);
+
 		// [START auth_sign-in_password]
 		firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)
 			.then((userCredential) => {
-				console.log(userCredential);
-
+				const newPostKey = firebase.database().ref().child("onlineUser").push()
+					.key;
+				const { displayName, email } = userCredential.user;
+				db.ref("onlineUser/" + newPostKey).set({ onlineUser: displayName });
+				window.addEventListener("beforeunload", function (e) {
+					e.preventDefault();
+					console.log("reload");
+					db.ref("onlineUser/" + newPostKey).remove();
+				});
 				// Display welcome back msg if user already registered
 				const welcomeBackMsg = (name) => {
 					// Remove Welcome Page
@@ -127,7 +137,6 @@ userLogInForm.addEventListener("submit", (e) => {
 							currentUser.updateProfile({
 								displayName: registerName.value,
 							});
-							console.log(userCredential);
 
 							// Remove name register form
 							nameRegisterForm.remove();
@@ -248,17 +257,3 @@ userLogInForm.addEventListener("submit", (e) => {
 	};
 	signInWithEmailPassword();
 });
-
-// function signOut() {
-// 	// [START auth_sign_out]
-// 	firebase
-// 		.auth()
-// 		.signOut()
-// 		.then(() => {
-// 			// Sign-out successful.
-// 		})
-// 		.catch((error) => {
-// 			// An error happened.
-// 		});
-// 	// [END auth_sign_out]
-// }
