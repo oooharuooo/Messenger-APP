@@ -176,14 +176,14 @@ userLogInForm.addEventListener("submit", (e) => {
 					${
 						emailCompare && dataMsg !== "Message removed"
 							? `<button data-id="${uniqueID}"class="removeMsgBtn msgBtn">
-							<i class="fas fa-trash"></i>
-							</button>`
+									<i class="fas fa-trash"></i>
+								</button>`
 							: ""
 					}
 				</span>
 				<p>${dataMsg}</p>
 			</li>`;
-
+					// Remove msg Btn
 					const removeBtn = document.querySelectorAll(".removeMsgBtn");
 					removeBtn.forEach((btn) => {
 						btn.addEventListener("click", () => {
@@ -197,15 +197,47 @@ userLogInForm.addEventListener("submit", (e) => {
 							});
 						});
 					});
-
+					// Update the UI every time msg removed
 					msgRef.on("child_changed", (snapshot) => {
 						document.getElementById(`msg${snapshot.key}`).innerHTML =
 							"Message removed";
 					});
-
 					// Auto scroll to bottom
 					displayContainer.scrollTop = displayContainer.scrollHeight;
 				};
+
+				// Logout
+				document.querySelector(".logOutBtn").addEventListener("click", () => {
+					const logOutMsgContainer = document.createElement("div");
+					logOutMsgContainer.classList.add(
+						"fadeInEffect-2",
+						"logOutMsg",
+						"welcomeMsgContainer"
+					);
+					logOutMsgContainer.innerHTML = `<p>
+						Bye,
+						<span>${userCredential.user.displayName}</span>
+					</p>`;
+					msgContainer.appendChild(logOutMsgContainer);
+
+					function signOut() {
+						// [START auth_sign_out]
+						firebase
+							.auth()
+							.signOut()
+							.then(() => {
+								setTimeout(() => {
+									location.reload();
+								}, 2000);
+							})
+							.catch((error) => {
+								// An error happened.
+								console.log(error);
+							});
+						// [END auth_sign_out]
+					}
+					signOut();
+				});
 			})
 			.catch((error) => {
 				// Display incorrect msg
@@ -216,35 +248,6 @@ userLogInForm.addEventListener("submit", (e) => {
 	signInWithEmailPassword();
 });
 
-// firebase.auth().onAuthStateChanged((user) => {
-// 	if (user) {
-// 		// User is signed in, see docs for a list of available properties
-// 		// https://firebase.google.com/docs/reference/js/firebase.User
-// 		var uid = user.uid;
-// 		console.log(user.displayName);
-// 		// ...
-// 	} else {
-// 		// User is signed out
-// 		// ...
-// 	}
-// });
-
-// document.querySelector(".logOut").addEventListener("click", () => {
-// 	function signOut() {
-// 		// [START auth_sign_out]
-// 		firebase
-// 			.auth()
-// 			.signOut()
-// 			.then(() => {
-// 				// Sign-out successful.
-// 			})
-// 			.catch((error) => {
-// 				// An error happened.
-// 			});
-// 		// [END auth_sign_out]
-// 	}
-// 	signOut();
-// });
 // function signOut() {
 // 	// [START auth_sign_out]
 // 	firebase

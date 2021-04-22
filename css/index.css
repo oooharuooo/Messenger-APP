@@ -89,6 +89,7 @@ body {
   background-color: #f7d3d3;
   border-radius: 2%;
   border: 2px solid #ce3838;
+  position: relative;
   overflow-x: auto; }
   .displayContainer::-webkit-scrollbar {
     width: 0.5rem; }
@@ -132,6 +133,11 @@ body {
       color: #ce3838;
       border-radius: 40px 50px 70px 15px;
       align-self: flex-end; }
+    .displayContainer .msgContainer .logOutMsg {
+      background-color: #d8ddf1; }
+      .displayContainer .msgContainer .logOutMsg span {
+        color: #ce3838;
+        font-size: 2.5em; }
   .displayContainer .singleMSG {
     background-color: #fff6f6;
     color: #644cad;
@@ -586,3 +592,10 @@ template {
 .removeMsgBtn {
   color: red;
   padding: 0; }
+
+.logOutBtn {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  background-color: #f7d3d3;
+  width: fit-content;
+  align-self: flex-end; }
