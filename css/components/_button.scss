@@ -87,3 +87,14 @@
 	color: red;
 	padding: 0;
 }
+
+// Logout Button
+
+.logOutBtn {
+	font-size: 1.5rem;
+	margin-bottom: 1rem;
+
+	background-color: $primary;
+	width: fit-content;
+	align-self: flex-end;
+}
