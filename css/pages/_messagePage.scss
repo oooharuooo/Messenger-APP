@@ -27,6 +27,7 @@ body {
 	border-radius: 2%;
 	border: 2px solid $red;
 
+	position: relative;
 	overflow-x: auto;
 
 	&::-webkit-scrollbar {
@@ -81,6 +82,14 @@ body {
 			color: $red;
 			border-radius: 40px 50px 70px 15px;
 			align-self: flex-end;
+		}
+
+		.logOutMsg {
+			background-color: $third;
+			span {
+				color: $red;
+				font-size: 2.5em;
+			}
 		}
 	}
 	.singleMSG {
