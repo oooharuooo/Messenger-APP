@@ -87,12 +87,12 @@ userLogInForm.addEventListener("submit", (e) => {
 				const newPostKey = firebase.database().ref().child("onlineUser").push()
 					.key;
 				const { displayName, email } = userCredential.user;
-				db.ref("onlineUser/" + newPostKey).set({ onlineUser: displayName });
-				window.addEventListener("beforeunload", function (e) {
-					e.preventDefault();
-					console.log("reload");
-					db.ref("onlineUser/" + newPostKey).remove();
-				});
+				// db.ref("onlineUser/" + newPostKey).set({ onlineUser: displayName });
+				// window.addEventListener("beforeunload", function (e) {
+				// 	e.preventDefault();
+				// 	console.log("reload");
+				// 	db.ref("onlineUser/" + newPostKey).remove();
+				// });
 				// Display welcome back msg if user already registered
 				const welcomeBackMsg = (name) => {
 					// Remove Welcome Page
@@ -219,16 +219,13 @@ userLogInForm.addEventListener("submit", (e) => {
 				// Logout
 				document.querySelector(".logOutBtn").addEventListener("click", () => {
 					const logOutMsgContainer = document.createElement("div");
-					logOutMsgContainer.classList.add(
-						"fadeInEffect-2",
-						"logOutMsg",
-						"welcomeMsgContainer"
-					);
+					logOutMsgContainer.classList.add("fadeInEffect-2", "logOutMsg");
 					logOutMsgContainer.innerHTML = `<p>
 						Bye,
 						<span>${userCredential.user.displayName}</span>
 					</p>`;
-					msgContainer.appendChild(logOutMsgContainer);
+					msgContainer.remove();
+					displayContainer.appendChild(logOutMsgContainer);
 
 					function signOut() {
 						// [START auth_sign_out]
