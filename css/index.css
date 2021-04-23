@@ -246,6 +246,7 @@ body {
     transform: translate(-50%, -50%);
     height: 100%;
     width: 100%;
+    z-index: 10000;
     background-color: #d8ddf1;
     color: #644cad;
     font-size: 1.5rem;

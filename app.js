@@ -1,3 +1,6 @@
+import { registeredMsg } from "./javascript/showRegisterMsg.js";
+import logOutHandler from "./javascript/logOutHandler.js";
+
 /* ********** */
 // Main Script //
 /* ********** */
@@ -41,7 +44,6 @@ registerForm.addEventListener("submit", (e) => {
 			.createUserWithEmailAndPassword(email, password)
 			.then((userCredential) => {
 				// Display msg when user successful registered
-
 				registeredMsg(successMsg);
 			})
 			.catch((error) => {
@@ -56,14 +58,6 @@ registerForm.addEventListener("submit", (e) => {
 	// Erase value input
 	registerForm.reset();
 });
-
-// display register successful or fail msg function
-const registeredMsg = (msg) => {
-	msg.classList.remove("displayNone");
-	setTimeout(() => {
-		msg.classList.add("displayNone");
-	}, 3000);
-};
 
 /* ******************* */
 /* User Login Form */
@@ -87,33 +81,10 @@ userLogInForm.addEventListener("submit", (e) => {
 			.auth()
 			.signInWithEmailAndPassword(email, password)
 			.then((userCredential) => {
-				const { displayName, email } = userCredential.user;
+				let { displayName, email: displayEmail } = userCredential.user;
 				const newPostKey = firebase.database().ref().child("onlineUser").push()
 					.key;
 
-				db.ref("onlineUser/" + newPostKey).set({ onlineUser: displayName });
-
-				const addOnlineUser = (snapshot) => {
-					const { onlineUser: currentOnlineName } = snapshot.val();
-					const currentOnlineID = snapshot.key;
-					onlineUserDetails.innerHTML += `<p id="${currentOnlineID}">${currentOnlineName}</p>`;
-
-					db.ref("/onlineUser").on("child_removed", (snapshot) => {
-						const deleteID = snapshot.key;
-						const deletedUser = document.querySelector(`#${deleteID}`);
-						deletedUser && deletedUser.remove();
-					});
-				};
-				db.ref("/onlineUser").on("child_added", addOnlineUser);
-
-				window.addEventListener("beforeunload", function (e) {
-					e.preventDefault();
-					db.ref("onlineUser/" + newPostKey).remove();
-				});
-
-				onlineUserBtn.addEventListener("click", (e) => {
-					onlineUserContainer.classList.remove("displayNone");
-				});
 				// Display welcome back msg if user already registered
 				const welcomeBackMsg = (name) => {
 					// Remove Welcome Page
@@ -140,33 +111,62 @@ userLogInForm.addEventListener("submit", (e) => {
 					setTimeout(() => {
 						welcomeMsgContainer.remove();
 						msgForm.classList.remove("displayNone");
+						showOnlineUser();
 						msgRef.on("child_added", updateMsgs);
 					}, 3000);
 				};
 				// Signed in
 				// Remove Welcome Page and display Msg Page
 				formPage.remove();
-				if (userCredential) {
-					// display name register form only if there is no displayName in Database
-					if (userCredential.user.displayName === null) {
-						const currentUser = firebase.auth().currentUser;
-						nameRegisterForm.classList.remove("displayNone");
-						nameRegisterForm.addEventListener("submit", (e) => {
-							e.preventDefault();
-							// Append name to database
-							userCredential.user.displayName = registerName.value;
-							currentUser.updateProfile({
-								displayName: registerName.value,
-							});
 
-							// Remove name register form
-							nameRegisterForm.remove();
-							welcomeBackMsg(registerName);
+				// display name register form only if there is no displayName in Database
+				if (displayName === null) {
+					const currentUser = firebase.auth().currentUser;
+					nameRegisterForm.classList.remove("displayNone");
+					nameRegisterForm.addEventListener("submit", (e) => {
+						e.preventDefault();
+						// Append name to database
+						displayName = registerName.value;
+						currentUser.updateProfile({
+							displayName: registerName.value,
 						});
-					} else {
-						welcomeBackMsg(userCredential);
-					}
+
+						// Remove name register form
+						nameRegisterForm.remove();
+						welcomeBackMsg(registerName);
+					});
+				} else {
+					welcomeBackMsg(userCredential);
 				}
+
+				// Show Online User
+				const showOnlineUser = () => {
+					db.ref("onlineUser/" + newPostKey).set({ onlineUser: displayName });
+
+					const addOnlineUser = (snapshot) => {
+						const { onlineUser: currentOnlineName } = snapshot.val();
+						const currentOnlineID = snapshot.key;
+						onlineUserDetails.innerHTML += `<p id="${currentOnlineID}">${currentOnlineName}</p>`;
+
+						db.ref("/onlineUser").on("child_removed", (snapshot) => {
+							const deleteID = snapshot.key;
+							const deletedUser = document.querySelector(`#${deleteID}`);
+							deletedUser && deletedUser.remove();
+						});
+					};
+					db.ref("/onlineUser").on("child_added", addOnlineUser);
+
+					window.addEventListener("beforeunload", function (e) {
+						e.preventDefault();
+						db.ref("onlineUser/" + newPostKey).remove();
+					});
+
+					onlineUserBtn.addEventListener("click", (e) => {
+						onlineUserContainer.classList.remove("displayNone");
+					});
+				};
+				// END Show Online User
+
 				/* ******************* */
 				/* Msg Form Display */
 				/* ******************* */
@@ -176,18 +176,14 @@ userLogInForm.addEventListener("submit", (e) => {
 					e.preventDefault();
 
 					const msgText = document.querySelector("#msg");
-					const postId = db.ref("/msgs").push().key;
-
 					//Using Google Realtime Database to store user information
-					userInfo = {
-						dataName: userCredential.user.displayName,
+					const userInfo = {
+						dataName: displayName,
 						dataMsg: msgText.value,
-						dataEmail: userCredential.user.email,
+						dataEmail: displayEmail,
 					};
-
 					// Push user information to database
-					db.ref("msgs/" + postId).set(userInfo);
-
+					msgRef.push(userInfo);
 					// Erase text message
 					msgText.value = "";
 				});
@@ -195,18 +191,18 @@ userLogInForm.addEventListener("submit", (e) => {
 				// Append and display values from database to the UI
 				const updateMsgs = (snapshot) => {
 					const { dataName, dataMsg, dataEmail } = snapshot.val();
-					const uniqueID = snapshot.key;
-					const emailCompare = userCredential.user.email === dataEmail;
+					const msgID = snapshot.key;
+					const emailCompare = displayEmail === dataEmail;
 
 					msgContainer.innerHTML += `
-			<li id="msg${uniqueID}" class="singleMSG ${
+			<li id="msg${msgID}" class="singleMSG ${
 						emailCompare ? "alignmentRight" : "alignmentLeft"
 					}">
 				<span>${emailCompare ? "" : `${dataName} :`}</span>
 				<span>
 					${
 						emailCompare && dataMsg !== "Message removed"
-							? `<button data-id="${uniqueID}"class="removeMsgBtn msgBtn">
+							? `<button data-id="${msgID}"class="removeMsgBtn msgBtn">
 									<i class="fas fa-trash"></i>
 								</button>`
 							: ""
@@ -219,11 +215,11 @@ userLogInForm.addEventListener("submit", (e) => {
 					removeBtn.forEach((btn) => {
 						btn.addEventListener("click", () => {
 							const btnID = btn.getAttribute("data-id");
-
 							btn.remove();
+
 							msgRef.child(btnID).set({
-								dataName: userCredential.user.displayName,
-								dataEmail: userCredential.user.email,
+								dataName: displayName,
+								dataEmail: displayEmail,
 								dataMsg: "Message removed",
 							});
 						});
@@ -237,36 +233,37 @@ userLogInForm.addEventListener("submit", (e) => {
 					displayContainer.scrollTop = displayContainer.scrollHeight;
 				};
 
+				logOutHandler(displayName, newPostKey);
 				// Logout
-				document.querySelector(".logOutBtn").addEventListener("click", () => {
-					const logOutMsgContainer = document.createElement("div");
-					logOutMsgContainer.classList.add("fadeInEffect-2", "logOutMsg");
-					logOutMsgContainer.innerHTML = `<p>
-						Bye,
-						<span>${userCredential.user.displayName}</span>
-					</p>`;
-					msgContainer.remove();
-					displayContainer.appendChild(logOutMsgContainer);
+				// document.querySelector(".logOutBtn").addEventListener("click", () => {
+				// 	const logOutMsgContainer = document.createElement("div");
+				// 	logOutMsgContainer.classList.add("fadeInEffect-2", "logOutMsg");
+				// 	logOutMsgContainer.innerHTML = `<p>
+				// 		Bye,
+				// 		<span>${displayName}</span>
+				// 	</p>`;
+				// 	msgContainer.remove();
+				// 	displayContainer.appendChild(logOutMsgContainer);
 
-					function signOut() {
-						// [START auth_sign_out]
-						firebase
-							.auth()
-							.signOut()
-							.then(() => {
-								setTimeout(() => {
-									db.ref("onlineUser/" + newPostKey).remove();
-									location.reload();
-								}, 2000);
-							})
-							.catch((error) => {
-								// An error happened.
-								console.log(error);
-							});
-						// [END auth_sign_out]
-					}
-					signOut();
-				});
+				// 	function signOut() {
+				// 		// [START auth_sign_out]
+				// 		firebase
+				// 			.auth()
+				// 			.signOut()
+				// 			.then(() => {
+				// 				setTimeout(() => {
+				// 					db.ref("onlineUser/" + newPostKey).remove();
+				// 					location.reload();
+				// 				}, 2000);
+				// 			})
+				// 			.catch((error) => {
+				// 				// An error happened.
+				// 				console.log(error);
+				// 			});
+				// 		// [END auth_sign_out]
+				// 	}
+				// 	signOut();
+				// });
 			})
 			.catch((error) => {
 				// Display incorrect msg
