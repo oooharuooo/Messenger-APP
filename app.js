@@ -15,6 +15,9 @@ const registerName = document.querySelector("#registerName");
 const msgPage = document.querySelector(".msgPage");
 const welcomePage = document.querySelector(".welcomePage");
 
+const onlineUserContainer = document.querySelector(".onlineUserContainer");
+const onlineUserBtn = document.querySelector(".onlineUserBtn");
+const onlineUserDetails = document.querySelector(".onlineUserDetails");
 /* ******************* */
 /* User Register Form */
 /* ******************* */
@@ -84,15 +87,33 @@ userLogInForm.addEventListener("submit", (e) => {
 			.auth()
 			.signInWithEmailAndPassword(email, password)
 			.then((userCredential) => {
+				const { displayName, email } = userCredential.user;
 				const newPostKey = firebase.database().ref().child("onlineUser").push()
 					.key;
-				const { displayName, email } = userCredential.user;
-				// db.ref("onlineUser/" + newPostKey).set({ onlineUser: displayName });
-				// window.addEventListener("beforeunload", function (e) {
-				// 	e.preventDefault();
-				// 	console.log("reload");
-				// 	db.ref("onlineUser/" + newPostKey).remove();
-				// });
+
+				db.ref("onlineUser/" + newPostKey).set({ onlineUser: displayName });
+
+				const addOnlineUser = (snapshot) => {
+					const { onlineUser: currentOnlineName } = snapshot.val();
+					const currentOnlineID = snapshot.key;
+					onlineUserDetails.innerHTML += `<p id="${currentOnlineID}">${currentOnlineName}</p>`;
+
+					db.ref("/onlineUser").on("child_removed", (snapshot) => {
+						const deleteID = snapshot.key;
+						const deletedUser = document.querySelector(`#${deleteID}`);
+						deletedUser && deletedUser.remove();
+					});
+				};
+				db.ref("/onlineUser").on("child_added", addOnlineUser);
+
+				window.addEventListener("beforeunload", function (e) {
+					e.preventDefault();
+					db.ref("onlineUser/" + newPostKey).remove();
+				});
+
+				onlineUserBtn.addEventListener("click", (e) => {
+					onlineUserContainer.classList.remove("displayNone");
+				});
 				// Display welcome back msg if user already registered
 				const welcomeBackMsg = (name) => {
 					// Remove Welcome Page
@@ -234,6 +255,7 @@ userLogInForm.addEventListener("submit", (e) => {
 							.signOut()
 							.then(() => {
 								setTimeout(() => {
+									db.ref("onlineUser/" + newPostKey).remove();
 									location.reload();
 								}, 2000);
 							})
