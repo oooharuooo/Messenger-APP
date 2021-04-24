@@ -100,6 +100,9 @@ body {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center; }
+    @media (min-width: 1024px) {
+      body main {
+        width: 40%; } }
 
 .msgPage {
   height: 100%;
@@ -130,14 +133,63 @@ body {
 
 .onlineUserContainer {
   position: absolute;
-  background-color: aliceblue;
-  width: 100%;
-  height: 50%;
-  z-index: 100;
-  opacity: 0.9;
-  top: 56%;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); }
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background-color: white;
+  color: #644cad;
+  top: 49%;
+  width: 100%;
+  border-radius: 4%;
+  z-index: 10;
+  opacity: 0.9; }
+  .onlineUserContainer .onlineInnerContainer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding: 2rem; }
+    .onlineUserContainer .onlineInnerContainer .onlineUserDetails {
+      display: flex;
+      gap: 1rem;
+      font-size: 1.3rem;
+      overflow: auto; }
+      .onlineUserContainer .onlineInnerContainer .onlineUserDetails::-webkit-scrollbar {
+        width: 0.5rem; }
+      .onlineUserContainer .onlineInnerContainer .onlineUserDetails::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); }
+      .onlineUserContainer .onlineInnerContainer .onlineUserDetails::-webkit-scrollbar-thumb {
+        background-color: #644cad7a; }
+      .onlineUserContainer .onlineInnerContainer .onlineUserDetails p {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        background-color: #fff6f6;
+        padding: 0.5rem;
+        border-radius: 15px; }
+        .onlineUserContainer .onlineInnerContainer .onlineUserDetails p:before {
+          content: "\A";
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: yellowgreen;
+          display: inline-block;
+          margin-right: 0.2rem;
+          align-self: flex-end; }
+      .onlineUserContainer .onlineInnerContainer .onlineUserDetails .meOnline {
+        color: #ce3838; }
 
 .displayContainer {
   display: -webkit-box;
@@ -808,3 +860,12 @@ template {
   border-bottom-left-radius: 15px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0; }
+
+.closeUserBtn {
+  width: fit-content;
+  align-self: flex-end;
+  border-radius: 5px;
+  padding: 0 0.2rem;
+  font-size: 1.5rem;
+  color: #fff6f6;
+  background-color: #644cad; }

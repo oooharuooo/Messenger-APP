@@ -10,9 +10,9 @@ body {
 		-ms-flex-pack: center;
 		justify-content: center;
 
-		// @media (min-width: 1440px) {
-		// 	width: 20%;
-		// }
+		@media (min-width: 1024px) {
+			width: 40%;
+		}
 	}
 }
 
@@ -32,15 +32,54 @@ body {
 	}
 }
 .onlineUserContainer {
-	position: absolute;
-	background-color: aliceblue;
+	@include absoluteCentered;
+
+	background-color: white;
+	color: $second;
+
+	top: 49%;
 	width: 100%;
-	height: 50%;
-	z-index: 100;
+	border-radius: 4%;
+
+	z-index: 10;
 	opacity: 0.9;
-	top: 56%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+
+	.onlineInnerContainer {
+		@include flexColumn;
+		padding: 2rem;
+
+		.onlineUserDetails {
+			display: flex;
+			gap: 1rem;
+			font-size: 1.3rem;
+
+			@include scrollbar;
+			overflow: auto;
+
+			p {
+				@include flexCenter;
+				background-color: $white;
+				padding: 0.5rem;
+				border-radius: 15px;
+
+				&:before {
+					content: "\A";
+					width: 10px;
+					height: 10px;
+
+					border-radius: 50%;
+					background: yellowgreen;
+
+					display: inline-block;
+					margin-right: 0.2rem;
+					align-self: flex-end;
+				}
+			}
+			.meOnline {
+				color: $red;
+			}
+		}
+	}
 }
 .displayContainer {
 	@include flexColumn;
@@ -56,18 +95,7 @@ body {
 	position: relative;
 	overflow-x: auto;
 
-	&::-webkit-scrollbar {
-		width: 0.5rem;
-	}
-
-	&::-webkit-scrollbar-track {
-		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-		box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-	}
-
-	&::-webkit-scrollbar-thumb {
-		background-color: #644cad7a;
-	}
+	@include scrollbar;
 
 	.msgContainer {
 		@include flexColumn;

@@ -1,5 +1,7 @@
 import { registeredMsg } from "./javascript/showRegisterMsg.js";
 import logOutHandler from "./javascript/logOutHandler.js";
+import registerFormHandler from "./javascript/registerFormHandler.js";
+import showOnlineUserHandler from "./javascript/showOnlineUserHandler.js";
 
 /* ********** */
 // Main Script //
@@ -18,46 +20,10 @@ const registerName = document.querySelector("#registerName");
 const msgPage = document.querySelector(".msgPage");
 const welcomePage = document.querySelector(".welcomePage");
 
-const onlineUserContainer = document.querySelector(".onlineUserContainer");
-const onlineUserBtn = document.querySelector(".onlineUserBtn");
-const onlineUserDetails = document.querySelector(".onlineUserDetails");
 /* ******************* */
 /* User Register Form */
 /* ******************* */
-
-const registerForm = document.querySelector(".userRegisterForm");
-registerForm.addEventListener("submit", (e) => {
-	const registerEmail = document.querySelector("#registerEmail");
-	const registerPassword = document.querySelector("#registerPassword");
-	const successMsg = document.querySelector(".successMsg");
-	const errorMsg2 = document.querySelector(".errorMsg-2");
-
-	e.preventDefault();
-
-	const signUpWithEmailPassword = (e) => {
-		const email = registerEmail.value;
-		const password = registerPassword.value;
-
-		// [START auth_signup_password]
-		firebase
-			.auth()
-			.createUserWithEmailAndPassword(email, password)
-			.then((userCredential) => {
-				// Display msg when user successful registered
-				registeredMsg(successMsg);
-			})
-			.catch((error) => {
-				// Display error when email is already registered
-				registeredMsg(errorMsg2);
-			});
-		// [END auth_sign-in_password]
-	};
-
-	signUpWithEmailPassword();
-
-	// Erase value input
-	registerForm.reset();
-});
+registerFormHandler();
 
 /* ******************* */
 /* User Login Form */
@@ -111,7 +77,8 @@ userLogInForm.addEventListener("submit", (e) => {
 					setTimeout(() => {
 						welcomeMsgContainer.remove();
 						msgForm.classList.remove("displayNone");
-						showOnlineUser();
+						// Show Online User
+						showOnlineUserHandler(displayName, newPostKey);
 						msgRef.on("child_added", updateMsgs);
 					}, 3000);
 				};
@@ -138,34 +105,6 @@ userLogInForm.addEventListener("submit", (e) => {
 				} else {
 					welcomeBackMsg(userCredential);
 				}
-
-				// Show Online User
-				const showOnlineUser = () => {
-					db.ref("onlineUser/" + newPostKey).set({ onlineUser: displayName });
-
-					const addOnlineUser = (snapshot) => {
-						const { onlineUser: currentOnlineName } = snapshot.val();
-						const currentOnlineID = snapshot.key;
-						onlineUserDetails.innerHTML += `<p id="${currentOnlineID}">${currentOnlineName}</p>`;
-
-						db.ref("/onlineUser").on("child_removed", (snapshot) => {
-							const deleteID = snapshot.key;
-							const deletedUser = document.querySelector(`#${deleteID}`);
-							deletedUser && deletedUser.remove();
-						});
-					};
-					db.ref("/onlineUser").on("child_added", addOnlineUser);
-
-					window.addEventListener("beforeunload", function (e) {
-						e.preventDefault();
-						db.ref("onlineUser/" + newPostKey).remove();
-					});
-
-					onlineUserBtn.addEventListener("click", (e) => {
-						onlineUserContainer.classList.remove("displayNone");
-					});
-				};
-				// END Show Online User
 
 				/* ******************* */
 				/* Msg Form Display */
