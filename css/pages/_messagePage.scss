@@ -182,7 +182,6 @@ body {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
-	height: 35px;
 	padding: 0.3rem;
 
 	input {
@@ -190,6 +189,7 @@ body {
 		-ms-flex: 1;
 		flex: 1;
 		text-align: center;
+		height: 3rem;
 
 		@include borderRadius(15px, 15px);
 		outline: none;

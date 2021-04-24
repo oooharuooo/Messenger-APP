@@ -308,13 +308,13 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 35px;
   padding: 0.3rem; }
   .msgForm input {
     -webkit-box-flex: 1;
     -ms-flex: 1;
     flex: 1;
     text-align: center;
+    height: 3rem;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
     border-top-right-radius: 0;
