@@ -127,11 +127,28 @@
 					</span>
 				</h1>
 
-				<!-- Logout button -->
-				<button class="logOutBtn msgBtn">
-					<i class="fas fa-sign-out-alt"></i>
-				</button>
-				
+				<div class="buttonContainer">
+					<button class="onlineUserBtn msgBtn">
+						<i class="fas fa-users"></i>
+						<span>Online</span>
+					</button>
+					<button class="logOutBtn msgBtn">
+						<i class="fas fa-sign-out-alt"></i>
+						<span>LogOut</span>
+					</button>
+				</div>
+
+				<div class="onlineUserContainer displayNone">
+					<div class="onlineInnerContainer">
+						<button class="closeUserBtn msgBtn">
+							<i class="fas fa-window-close"></i>
+						</button>
+						<h2 class="onlineNumber">Current Online:</h2>
+						<div class="onlineUserDetails">	
+						</div>
+					</div>
+				</div>
+
 				<div class="displayContainer">
 					<ul class="msgContainer">
 						<li class="singleMSG alignmentLeft"></li>
@@ -171,6 +188,6 @@
 		<!-- Filter Tab -->
 		<script src="./javascript/filterTab.js"></script>
 		<!-- Main script -->
-		<script src="./app.js"></script>
+		<script type="module" src="./app.js"></script>
 	</body>
 </html>

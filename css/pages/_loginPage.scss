@@ -11,19 +11,19 @@
 		left: 84%;
 
 		@media (min-width: 768px) {
-			left: 72%;
-		}
-		@media (min-width: 1440px) {
-			left: 65%;
-		}
-		@media (min-width: 1920px) {
-			left: 58%;
+			left: 75%;
 		}
 	}
 }
 .filterTab {
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
 	justify-content: center;
+	-webkit-column-gap: 3rem;
+	-moz-column-gap: 3rem;
 	column-gap: 3rem;
 
 	font-size: 2rem;

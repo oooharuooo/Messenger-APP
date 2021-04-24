@@ -1,5 +1,7 @@
 .submitEffect {
 	color: $second;
+	-webkit-transition: 0.3s ease all;
+	-o-transition: 0.3s ease all;
 	transition: 0.3s ease all;
 	&:hover {
 		color: $third;
@@ -27,9 +29,13 @@
 	border: 3px solid $second;
 
 	position: relative;
+	-webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16),
+		0 3px 6px rgba(0, 0, 0, 0.1);
 	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);
 	z-index: 2;
 	&:before {
+		-webkit-transition: 0.5s all ease;
+		-o-transition: 0.5s all ease;
 		transition: 0.5s all ease;
 		position: absolute;
 		top: 0;
@@ -43,6 +49,8 @@
 	}
 	&:hover {
 		&:before {
+			-webkit-transition: 0.5s all ease;
+			-o-transition: 0.5s all ease;
 			transition: 0.5s all ease;
 			left: 0;
 			right: 0;
@@ -51,6 +59,8 @@
 	}
 	&:focus {
 		&:before {
+			-webkit-transition: 0.5s all ease;
+			-o-transition: 0.5s all ease;
 			transition: 0.5s all ease;
 			left: 0;
 			right: 0;
@@ -69,16 +79,38 @@
 	border: none;
 	@include borderRadius(0, 0, 15px, 15px);
 
+	-webkit-transition: background 0.2s ease-in-out, color 0.2s ease-in,
+		-webkit-box-shadow 0.2s ease-in-out;
+
+	transition: background 0.2s ease-in-out, color 0.2s ease-in,
+		-webkit-box-shadow 0.2s ease-in-out;
+
+	-o-transition: box-shadow 0.2s ease-in-out, background 0.2s ease-in-out,
+		color 0.2s ease-in;
+
 	transition: box-shadow 0.2s ease-in-out, background 0.2s ease-in-out,
 		color 0.2s ease-in;
+
+	transition: box-shadow 0.2s ease-in-out, background 0.2s ease-in-out,
+		color 0.2s ease-in, -webkit-box-shadow 0.2s ease-in-out;
+	-webkit-filter: drop-shadow(10px 5px 10px #ffe9ff);
 	filter: drop-shadow(10px 5px 10px #ffe9ff);
 
 	&:active {
 		background-color: #ffe9ff;
+		-webkit-box-shadow: 0px -1px 0px -1px;
 		box-shadow: 0px -1px 0px -1px;
 
+		-webkit-transform: translateY(0.5rem);
+
+		-ms-transform: translateY(0.5rem);
+
 		transform: translateY(0.5rem);
+		-webkit-transition: -webkit-transform 0.3s ease;
+		transition: -webkit-transform 0.3s ease;
+		-o-transition: transform 0.3s ease;
 		transition: transform 0.3s ease;
+		transition: transform 0.3s ease, -webkit-transform 0.3s ease;
 	}
 }
 
@@ -89,12 +121,26 @@
 }
 
 // Logout Button
-
 .logOutBtn {
-	font-size: 1.5rem;
-	margin-bottom: 1rem;
-
 	background-color: $primary;
+	color: $second;
+}
+// Online User Button
+.onlineUserBtn {
+	background-color: $primary;
+	color: $second;
+	@include borderRadius(15px, 15px);
+}
+
+// Close User Online Display
+.closeUserBtn {
 	width: fit-content;
 	align-self: flex-end;
+
+	border-radius: 5px;
+	padding: 0 0.2rem;
+
+	font-size: 1.5rem;
+	color: $white;
+	background-color: $second;
 }
