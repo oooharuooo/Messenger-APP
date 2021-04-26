@@ -1,12 +1,13 @@
-const logOutHandler = (displayName, newPostKey) => {
+const logOutHandler = (displayName, registerName, newPostKey) => {
 	document.querySelector(".logOutBtn").addEventListener("click", () => {
+		const nameRegisterForm = document.querySelector(".nameRegisterForm");
 		const msgContainer = document.querySelector(".msgContainer");
 		const displayContainer = document.querySelector(".displayContainer");
 		const logOutMsgContainer = document.createElement("div");
 		logOutMsgContainer.classList.add("fadeInEffect-2", "logOutMsg");
 		logOutMsgContainer.innerHTML = `<p>
 						Bye,
-						<span>${displayName}</span>
+						<span>${registerName.value || displayName}</span>
 					</p>`;
 		msgContainer.remove();
 		displayContainer.appendChild(logOutMsgContainer);

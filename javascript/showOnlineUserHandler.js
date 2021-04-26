@@ -8,15 +8,17 @@ const showOnlineUserHandler = (displayName, newPostKey) => {
 	db.ref("onlineUser/" + newPostKey).set({ onlineUser: displayName });
 
 	const addOnlineUser = (snapshot) => {
-		const { onlineUser: currentOnlineName } = snapshot.val();
+		const { onlineUser } = snapshot.val();
 		const currentOnlineID = snapshot.key;
 		const compareID = currentOnlineID === newPostKey;
 
 		onlineNumber.textContent = `Current online: ${
 			onlineUserDetails.childElementCount + 1
 		}`;
-		onlineUserDetails.innerHTML += `<p id="${currentOnlineID}" class="${compareID && "meOnline"}">
-			${compareID ? "You" : currentOnlineName}
+		onlineUserDetails.innerHTML += `<p id="${currentOnlineID}" class="${
+			compareID && "meOnline"
+		}">
+			${compareID ? "You" : onlineUser}
 		</p>`;
 
 		db.ref("/onlineUser").on("child_removed", (snapshot) => {

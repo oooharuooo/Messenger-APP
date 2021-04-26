@@ -172,7 +172,7 @@ userLogInForm.addEventListener("submit", (e) => {
 					displayContainer.scrollTop = displayContainer.scrollHeight;
 				};
 
-				logOutHandler(displayName, newPostKey);
+				logOutHandler(displayName, registerName, newPostKey);
 				// Logout
 				// document.querySelector(".logOutBtn").addEventListener("click", () => {
 				// 	const logOutMsgContainer = document.createElement("div");
